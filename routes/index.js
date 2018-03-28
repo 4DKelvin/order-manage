@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var parser = require('xml2json');
 var querystring = require('querystring');
 
 /* GET home page. */
@@ -11,6 +12,7 @@ router.get('/', function (req, res, next) {
             end: '2018-03-28'
         }), function (error, response, body) {
         if (!error && response.statusCode == 200) {
+            console.log(body)
             res.render('index', {title: '订单管理'});
         }
     });
@@ -32,7 +34,7 @@ router.get('/order', function (req, res, next) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.json(body)
+            res.json(parser.toJson(body));
         } else {
             res.send(500)
         }
