@@ -1,19 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var parser = require('xml2json');
+var xml2json = require('node-xml2json');
 var querystring = require('querystring');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     request('http://45.33.18.90/order?' + querystring.stringify({
             type: 'incr',
-            start: '2018-03-26',
-            end: '2018-03-28'
+            start: req.query.start,
+            end: req.query.end,
+            _: new Date().getTime()
         }), function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body.res)
-            res.render('index', {title: '订单管理'});
+            response = JSON.parse(body);
+            response = xml2json.parser(response.res);
+            console.log(response);
+            res.render('index', {title: '订单管理', data: response.result, params: req.query});
         }
     });
 });
@@ -34,7 +37,7 @@ router.get('/order', function (req, res, next) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.json({res:body});
+            res.json({res: body});
         } else {
             res.send(500)
         }

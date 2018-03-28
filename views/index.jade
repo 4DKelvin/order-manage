@@ -1,141 +1,128 @@
 extends layout
 
 block content
-  .am-g
-  .am-u-sm-12.am-u-md-6
-    .am-btn-toolbar
-      .am-btn-group.am-btn-group-xs
-        button.am-btn.am-btn-default(type='button')
-          span.am-icon-plus
-          |  新增
-        button.am-btn.am-btn-default(type='button')
-          span.am-icon-save
-          |  保存
-        button.am-btn.am-btn-default(type='button')
-          span.am-icon-archive
-          |  审核
-        button.am-btn.am-btn-default(type='button')
-          span.am-icon-trash-o
-          |  删除
-  .am-u-sm-12.am-u-md-3
-    .am-form-group
-      select(data-am-selected="{btnSize: 'sm'}")
-        option(value='option1') 所有类别
-        option(value='option2') IT业界
-        option(value='option3') 数码产品
-        option(value='option3') 笔记本电脑
-        option(value='option3') 平板电脑
-        option(value='option3') 只能手机
-        option(value='option3') 超极本
-  .am-u-sm-12.am-u-md-3
-    .am-input-group.am-input-group-sm
-      input.am-form-field(type='text')
-      span.am-input-group-btn
-        button.am-btn.am-btn-default(type='button') 搜索
+  form.am-g(action='/',method='get')
+    .am-u-sm-12.am-u-md-3
+      input.am-form-field(type='text', name='start', value=params.start, placeholder='起始日期时间', class='datetime-picker')
+    .am-u-sm-12.am-u-md-3
+      input.am-form-field(type='text', name='end',value=params.end, placeholder='结束日期时间', class='datetime-picker')
+    .am-u-sm-12.am-u-md-2
+      .am-input-group.am-input-group
+        span.am-input-group-btn
+          button.am-btn.am-btn-default(type='submit') 搜索
+    .am-u-sm-12.am-u-md-4
 
+  hr
   .am-g
-    .am-u-sm-12
-      table.am-table.am-table-bd.am-table-striped.admin-content-table
-        thead
-          tr
-            th ID
-            th 用户名
-            th 最后成交任务
-            th 成交订单
-            th 管理
-        tbody
-          tr
-            td 1
-            td John Clark
-            td
-              a(href='#') Business management
-            td
-              span.am-badge.am-badge-success +20
-            td
-              .am-dropdown(data-am-dropdown='')
-                button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                  span.am-icon-cog
-                  span.am-icon-caret-down
-                ul.am-dropdown-content
-                  li
-                    a(href='#') 1. 编辑
-                  li
-                    a(href='#') 2. 下载
-                  li
-                    a(href='#') 3. 删除
-          tr
-            td 2
-            td 风清扬
-            td
-              a(href='#') 公司LOGO设计
-            td
-              span.am-badge.am-badge-danger +2
-            td
-              .am-dropdown(data-am-dropdown='')
-                button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                  span.am-icon-cog
-                  span.am-icon-caret-down
-                ul.am-dropdown-content
-                  li
-                    a(href='#') 1. 编辑
-                  li
-                    a(href='#') 2. 下载
-                  li
-                    a(href='#') 3. 删除
-          tr
-            td 3
-            td 詹姆斯
-            td
-              a(href='#') 开发一款业务数据软件
-            td
-              span.am-badge.am-badge-warning +10
-            td
-              .am-dropdown(data-am-dropdown='')
-                button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                  span.am-icon-cog
-                  span.am-icon-caret-down
-                ul.am-dropdown-content
-                  li
-                    a(href='#') 1. 编辑
-                  li
-                    a(href='#') 2. 下载
-                  li
-                    a(href='#') 3. 删除
-          tr
-            td 4
-            td 云适配
-            td
-              a(href='#') 适配所有网站
-            td
-              span.am-badge.am-badge-secondary +50
-            td
-              .am-dropdown(data-am-dropdown='')
-                button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                  span.am-icon-cog
-                  span.am-icon-caret-down
-                ul.am-dropdown-content
-                  li
-                    a(href='#') 1. 编辑
-                  li
-                    a(href='#') 2. 下载
-                  li
-                    a(href='#') 3. 删除
-          tr
-            td 5
-            td 呵呵呵
-            td
-              a(href='#') 基兰会获得BUFF
-            td
-              span.am-badge +22
-            td
-              .am-dropdown(data-am-dropdown='')
-                button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                  span.am-icon-cog
-                  span.am-icon-caret-down
-                ul.am-dropdown-content
-                  li
-                    a(href='#') 1. 编辑
-                  li
-                    a(href='#') 2. 下载
-                  li
-                    a(href='#') 3. 删除
+    if !data || data.order
+      .am-u-sm-12
+        .am-alert.am-alert-success no orders found.
+    else if data.status == 'error'
+      .am-u-sm-12
+        .am-alert.am-alert-warning #{data.msg.content}
+    else
+      .am-u-sm-12
+        table.am-table.am-table-bd.am-table-striped.admin-content-table
+          thead
+            tr
+              th ID
+              th 用户名
+              th 最后成交任务
+              th 成交订单
+              th 管理
+          tbody
+            tr
+              td 1
+              td John Clark
+              td
+                a(href='#') Business management
+              td
+                span.am-badge.am-badge-success +20
+              td
+                .am-dropdown(data-am-dropdown='')
+                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
+                    span.am-icon-cog
+                    span.am-icon-caret-down
+                  ul.am-dropdown-content
+                    li
+                      a(href='#') 1. 编辑
+                    li
+                      a(href='#') 2. 下载
+                    li
+                      a(href='#') 3. 删除
+            tr
+              td 2
+              td 风清扬
+              td
+                a(href='#') 公司LOGO设计
+              td
+                span.am-badge.am-badge-danger +2
+              td
+                .am-dropdown(data-am-dropdown='')
+                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
+                    span.am-icon-cog
+                    span.am-icon-caret-down
+                  ul.am-dropdown-content
+                    li
+                      a(href='#') 1. 编辑
+                    li
+                      a(href='#') 2. 下载
+                    li
+                      a(href='#') 3. 删除
+            tr
+              td 3
+              td 詹姆斯
+              td
+                a(href='#') 开发一款业务数据软件
+              td
+                span.am-badge.am-badge-warning +10
+              td
+                .am-dropdown(data-am-dropdown='')
+                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
+                    span.am-icon-cog
+                    span.am-icon-caret-down
+                  ul.am-dropdown-content
+                    li
+                      a(href='#') 1. 编辑
+                    li
+                      a(href='#') 2. 下载
+                    li
+                      a(href='#') 3. 删除
+            tr
+              td 4
+              td 云适配
+              td
+                a(href='#') 适配所有网站
+              td
+                span.am-badge.am-badge-secondary +50
+              td
+                .am-dropdown(data-am-dropdown='')
+                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
+                    span.am-icon-cog
+                    span.am-icon-caret-down
+                  ul.am-dropdown-content
+                    li
+                      a(href='#') 1. 编辑
+                    li
+                      a(href='#') 2. 下载
+                    li
+                      a(href='#') 3. 删除
+            tr
+              td 5
+              td 呵呵呵
+              td
+                a(href='#') 基兰会获得BUFF
+              td
+                span.am-badge +22
+              td
+                .am-dropdown(data-am-dropdown='')
+                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
+                    span.am-icon-cog
+                    span.am-icon-caret-down
+                  ul.am-dropdown-content
+                    li
+                      a(href='#') 1. 编辑
+                    li
+                      a(href='#') 2. 下载
+                    li
+                      a(href='#') 3. 删除
