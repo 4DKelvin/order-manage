@@ -19,7 +19,7 @@ router.get('/', function(req, res, next) {
     }
   }, function(error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(arguments)
+      console.log(body)
     }
   });
   res.render('index', { title: '订单管理' });
