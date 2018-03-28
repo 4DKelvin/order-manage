@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
             end: '2018-03-28'
         }), function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body)
+            console.log(body.res)
             res.render('index', {title: '订单管理'});
         }
     });
@@ -34,7 +34,7 @@ router.get('/order', function (req, res, next) {
         }
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            res.json(parser.toJson(body));
+            res.json({res:body});
         } else {
             res.send(500)
         }
