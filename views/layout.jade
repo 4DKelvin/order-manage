@@ -1,7 +1,145 @@
 doctype html
-html
+html.no-js.fixed-layout
   head
-    title= title
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    title 后台管理
+    meta(name='description', content='后台管理')
+    meta(name='keywords', content='index')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='renderer', content='webkit')
+    meta(http-equiv='Cache-Control', content='no-siteapp')
+    meta(name='apple-mobile-web-app-title', content='订单管理')
+    link(rel='stylesheet', href='http://cdn.amazeui.org/amazeui/2.6.2/css/amazeui.min.css')
+    link(rel='stylesheet', href='http://amazeui.org/css/admin.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    //if lte IE 9
+      p.browsehappy
+        | 你正在使用
+        strong 过时
+        | 的浏览器，Amaze UI 暂不支持。 请
+        a(href='http://browsehappy.com/', target='_blank') 升级浏览器
+        |   以获得更好的体验！
+    header.am-topbar.am-topbar-inverse.admin-header
+      .am-topbar-brand
+        strong 后台管理 &nbsp;
+        small 业务系统
+      button.am-topbar-btn.am-topbar-toggle.am-btn.am-btn-sm.am-btn-success.am-show-sm-only(data-am-collapse="{target: '#topbar-collapse'}")
+        span.am-sr-only 导航切换
+        span.am-icon-bars
+      #topbar-collapse.am-collapse.am-topbar-collapse
+        ul.am-nav.am-nav-pills.am-topbar-nav.am-topbar-right.admin-header-list
+          li
+            a(href='javascript:;')
+              span.am-icon-envelope-o
+              |  收件箱
+              span.am-badge.am-badge-warning 5
+          li.am-dropdown(data-am-dropdown='')
+            a.am-dropdown-toggle(data-am-dropdown-toggle='', href='javascript:;')
+              span.am-icon-users
+              |  管理员
+              span.am-icon-caret-down
+            ul.am-dropdown-content
+              li
+                a(href='#')
+                  span.am-icon-user
+                  |  资料
+              li
+                a(href='#')
+                  span.am-icon-cog
+                  |  设置
+              li
+                a(href='#')
+                  span.am-icon-power-off
+                  |  退出
+          li.am-hide-sm-only
+            a#admin-fullscreen(href='javascript:;')
+              span.am-icon-arrows-alt
+              span.admin-fullText 开启全屏
+    .am-cf.admin-main
+      // sidebar start
+      #admin-offcanvas.admin-sidebar.am-offcanvas
+        .am-offcanvas-bar.admin-offcanvas-bar
+          ul.am-list.admin-sidebar-list
+            li
+              a(href='admin-index.html')
+                span.am-icon-home
+                |  首页
+            li.admin-parent
+              a.am-cf(data-am-collapse="{target: '#collapse-nav'}")
+                span.am-icon-file
+                |  页面模块
+                span.am-icon-angle-right.am-fr.am-margin-right
+              ul#collapse-nav.am-list.am-collapse.admin-sidebar-sub.am-in
+                li
+                  a.am-cf(href='admin-user.html')
+                    span.am-icon-check
+                    |  个人资料
+                    span.am-icon-star.am-fr.am-margin-right.admin-icon-yellow
+                li
+                  a(href='admin-help.html')
+                    span.am-icon-puzzle-piece
+                    |  帮助页
+                li
+                  a(href='admin-gallery.html')
+                    span.am-icon-th
+                    |  相册页面
+                    span.am-badge.am-badge-secondary.am-margin-right.am-fr 24
+                li
+                  a(href='admin-log.html')
+                    span.am-icon-calendar
+                    |  系统日志
+                li
+                  a(href='admin-404.html')
+                    span.am-icon-bug
+                    |  404
+            li
+              a(href='admin-table.html')
+                span.am-icon-table
+                |  表格
+            li
+              a(href='admin-form.html')
+                span.am-icon-pencil-square-o
+                |  表单
+            li
+              a(href='#')
+                span.am-icon-sign-out
+                |  注销
+          .am-panel.am-panel-default.admin-sidebar-panel
+            .am-panel-bd
+              p
+                span.am-icon-bookmark
+                |  公告
+              p 时光静好，与君语；细水流年，与君同。—— Amaze UI
+          .am-panel.am-panel-default.admin-sidebar-panel
+            .am-panel-bd
+              p
+                span.am-icon-tag
+                |  wiki
+              p Welcome to the Amaze UI wiki!
+      // sidebar end
+      // content start
+      .admin-content
+        .admin-content-body
+          .am-cf.am-padding
+            .am-fl.am-cf
+              strong.am-text-primary.am-text-lg 首页
+              |  /
+              small #{title}
+          block content
+        footer.admin-content-footer
+          hr
+          p.am-padding-left © 2014 AllMobilize, Inc. Licensed under MIT license.
+      // content end
+    a.am-icon-btn.am-icon-th-list.am-show-sm-only.admin-menu(href='#', data-am-offcanvas="{target: '#admin-offcanvas'}")
+    //if lt IE 9
+      script(src='http://libs.baidu.com/jquery/1.11.1/jquery.min.js')
+      script(src='http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js')
+      script(src='http://cdn.amazeui.org/amazeui/2.6.2/js/amazeui.ie8polyfill.min.js')
+    // [if (gte IE 9)|!(IE)] <!
+    script(src='http://amazeui.org/js/jquery.min.js')
+    // <![endif]
+    script(src='http://cdn.amazeui.org/amazeui/2.6.2/js/amazeui.min.js')
+    script(src='http://amazeui.org/js/app.js')
+
