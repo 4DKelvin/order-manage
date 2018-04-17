@@ -67,8 +67,12 @@ block content
                     input(type='hidden',name="flight_no",value=item.flight.code)
                     input(type='hidden',name="date",value=item.flight.depday)
                     input(type='hidden',name="cabin",value=item.flight.cabin)
-                    input(type='hidden',name="name",value=item.passenger.name)
-                    input(type='hidden',name="nid",value=item.passenger.cardnum)
+                    if item.passenger.length
+                      input(type='hidden',name="name",value=item.passenger.name)
+                      input(type='hidden',name="nid",value=item.passenger.cardnum)
+                    else
+                      input(type='hidden',name="name",value=item.passenger[0].name)
+                      input(type='hidden',name="nid",value=item.passenger[0].cardnum)
                     input(type='hidden',name="method_order",value=2)
                     input(type='hidden',name="order_price",value=allprice)
                     input(type='hidden',name="oid",value=item.id)
