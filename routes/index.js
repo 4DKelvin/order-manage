@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
         if (!error && response.statusCode == 200) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
-            console.log(response);
             res.render('index', {title: '订单管理', data: response.result, params: req.query});
         }
     });

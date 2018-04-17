@@ -14,7 +14,7 @@ block content
 
   hr
   .am-g
-    if !data || !data.result
+    if !data
       .am-u-sm-12
         .am-alert.am-alert-success no orders found.
     else if data.status == 'error'
@@ -26,28 +26,38 @@ block content
           thead
             tr
               th ID
-              th 用户名
-              th 最后成交任务
-              th 成交订单
+              th 金额
+              th 航班
+              th 乘客
+              th 联系人
               th 管理
           tbody
-            tr
-              td 1
-              td John Clark
-              td
-                a(href='#') Business management
-              td
-                span.am-badge.am-badge-success +20
-              td
-                .am-dropdown(data-am-dropdown='')
-                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                    span.am-icon-cog
-                    span.am-icon-caret-down
-                  ul.am-dropdown-content
-                    li
-                      a(href='#') 1. 编辑
-                    li
-                      a(href='#') 2. 下载
-                    li
-                      a(href='#') 3. 删除
+            each item in data.order
+              tr
+                td #{item.id}
+                td #{item.allprice}
+                td
+                  span #{item.flight.code}
+                  br
+                  span #{item.flight.depday}
+                  br
+                  span #{item.flight.deptime}
+                  span -
+                  span #{item.flight.arrtime}
+                td
+                  span #{item.passenger.name}
+                  br
+                  span #{item.passenger.birthday}
+                  br
+                  span #{item.passenger.gender}
+                  br
+                  span #{item.passenger.cardnum}
+                td
+                  span #{item.contact}
+                  br
+                  span #{item.contactmob}
+                  br
+                  span #{item.status}
+                td
+
 
