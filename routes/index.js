@@ -6,17 +6,9 @@ var querystring = require('querystring');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    console.log('http://45.33.18.90/order?' + querystring.stringify({
-            type: 'incr',
-            start: req.query.start,
-            end: req.query.end,
-            _: new Date().getTime()
-        }));
     request('http://45.33.18.90/order?' + querystring.stringify({
-            type: 'incr',
             start: req.query.start,
-            end: req.query.end,
-            _: new Date().getTime()
+            end: req.query.end
         }), function (error, response, body) {
         if (!error && response.statusCode == 200) {
             response = JSON.parse(body);
@@ -78,11 +70,11 @@ router.get('/order_by_oid', function (req, res) {
 
 router.get('/order', function (req, res, next) {
     request.post({
-        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?'+querystring.stringify({
+        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?' + querystring.stringify({
             domain: 'yfh',
             user: '17373761393',
             pass: '741852',
-            type: req.query.type,
+            type: 'incr',
             start: req.query.start,
             end: req.query.end
         }),
@@ -90,7 +82,6 @@ router.get('/order', function (req, res, next) {
             "content-type": "application/x-www-form-urlencoded"
         }
     }, function (error, response, body) {
-        console.log(response)
         if (!error && response.statusCode == 200) {
             res.json({res: body});
         } else {
