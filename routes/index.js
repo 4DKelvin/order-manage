@@ -14,16 +14,18 @@ router.get('/', function (req, res, next) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
             console.log(response.result.order)
-            request('http://172.105.232.134:12345/get_wx?uid=mrr3kX2ToSgyvbP', function (error, r, body) {
-                res.render('index', {
-                    title: '订单管理',
-                    data: response.result,
-                    params: req.query,
-                    wx_id: r.body.data.wx_id
-                });
+            request('http://45.33.18.90/get_wx', function (e, r, b) {
+                res.render('index', {title: '订单管理', data: response.result, params: req.query, wx_id: r.wx_id});
             })
         }
     });
+});
+
+
+router.get('/get_wx', function (req, res) {
+    request('http://172.105.232.134:12345/get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
+        res.json({wx_id: response.body.data.wx_id})
+    })
 });
 router.get('/tc_wx_bind_all', function (req, res) {
     request('http://172.105.232.134:12345/tc_wx_bind_all' + querystring.stringify({

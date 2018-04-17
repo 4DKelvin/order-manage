@@ -33,34 +33,34 @@ block content
               th 管理
           tbody
             each item in data.order
-                tr
-                  td #{item.id}
-                  td #{item.allprice}
-                  td
-                    span #{item.flight.code}
-                    br
-                    span #{item.flight.depday}
-                    br
-                    span #{item.flight.deptime}
-                    span -
-                    span #{item.flight.arrtime}
-                  td
-                    span #{item.passenger.name}
-                    br
-                    span #{item.passenger.birthday}
-                    br
-                    span #{item.passenger.gender}
-                    br
-                    span #{item.passenger.cardnum}
-                  td
-                    span #{item.contact}
-                    br
-                    span #{item.contactmob}
-                    br
-                    span #{item.status}
-                  td
-                    form(action='/upload_order',method='post')
-                      input(type='hidden',name="",value='')
-                      input(type='submit',value='上传')
+              tr
+                td #{item.id}
+                td #{item.allprice}
+                td
+                  span #{item.flight.code}
+                  br
+                  span #{item.flight.depday}
+                  br
+                  span #{item.flight.deptime}
+                  span -
+                  span #{item.flight.arrtime}
+                td
+                  span #{item.passenger.name}
+                  br
+                  span #{item.passenger.birthday}
+                  br
+                  span #{item.passenger.gender}
+                  br
+                  span #{item.passenger.cardnum}
+                td
+                  span #{item.contact}
+                  br
+                  span #{item.contactmob}
+                  br
+                  span #{item.status}
+                td
+                  form(action='/upload_order',method='post')
+                    input(type='hidden',name="wx_id",value=wx_id)
+                    input(type='submit',value='上传')
 
 
