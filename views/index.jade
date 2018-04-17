@@ -14,7 +14,7 @@ block content
 
   hr
   .am-g
-    if !data || data.order
+    if !data || !data.result
       .am-u-sm-12
         .am-alert.am-alert-success no orders found.
     else if data.status == 'error'
@@ -50,79 +50,4 @@ block content
                       a(href='#') 2. 下载
                     li
                       a(href='#') 3. 删除
-            tr
-              td 2
-              td 风清扬
-              td
-                a(href='#') 公司LOGO设计
-              td
-                span.am-badge.am-badge-danger +2
-              td
-                .am-dropdown(data-am-dropdown='')
-                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                    span.am-icon-cog
-                    span.am-icon-caret-down
-                  ul.am-dropdown-content
-                    li
-                      a(href='#') 1. 编辑
-                    li
-                      a(href='#') 2. 下载
-                    li
-                      a(href='#') 3. 删除
-            tr
-              td 3
-              td 詹姆斯
-              td
-                a(href='#') 开发一款业务数据软件
-              td
-                span.am-badge.am-badge-warning +10
-              td
-                .am-dropdown(data-am-dropdown='')
-                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                    span.am-icon-cog
-                    span.am-icon-caret-down
-                  ul.am-dropdown-content
-                    li
-                      a(href='#') 1. 编辑
-                    li
-                      a(href='#') 2. 下载
-                    li
-                      a(href='#') 3. 删除
-            tr
-              td 4
-              td 云适配
-              td
-                a(href='#') 适配所有网站
-              td
-                span.am-badge.am-badge-secondary +50
-              td
-                .am-dropdown(data-am-dropdown='')
-                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                    span.am-icon-cog
-                    span.am-icon-caret-down
-                  ul.am-dropdown-content
-                    li
-                      a(href='#') 1. 编辑
-                    li
-                      a(href='#') 2. 下载
-                    li
-                      a(href='#') 3. 删除
-            tr
-              td 5
-              td 呵呵呵
-              td
-                a(href='#') 基兰会获得BUFF
-              td
-                span.am-badge +22
-              td
-                .am-dropdown(data-am-dropdown='')
-                  button.am-btn.am-btn-default.am-btn-xs.am-dropdown-toggle(data-am-dropdown-toggle='')
-                    span.am-icon-cog
-                    span.am-icon-caret-down
-                  ul.am-dropdown-content
-                    li
-                      a(href='#') 1. 编辑
-                    li
-                      a(href='#') 2. 下载
-                    li
-                      a(href='#') 3. 删除
+

@@ -6,6 +6,12 @@ var querystring = require('querystring');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    console.log('http://45.33.18.90/order?' + querystring.stringify({
+            type: 'incr',
+            start: req.query.start,
+            end: req.query.end,
+            _: new Date().getTime()
+        }));
     request('http://45.33.18.90/order?' + querystring.stringify({
             type: 'incr',
             start: req.query.start,
@@ -15,6 +21,7 @@ router.get('/', function (req, res, next) {
         if (!error && response.statusCode == 200) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
+            console.log(response);
             res.render('index', {title: '订单管理', data: response.result, params: req.query});
         }
     });
@@ -70,6 +77,14 @@ router.get('/order_by_oid', function (req, res) {
 });
 
 router.get('/order', function (req, res, next) {
+    console.log('http://fuwu.jiulvxing.com/autoOta/orderExport',{
+        domain: 'yfh',
+        user: '17373761393',
+        pass: '741852',
+        type: req.query.type,
+        start: req.query.start,
+        end: req.query.end
+    })
     request.post({
         url: 'http://fuwu.jiulvxing.com/autoOta/orderExport',
         headers: {
@@ -84,6 +99,7 @@ router.get('/order', function (req, res, next) {
             end: req.query.end
         }
     }, function (error, response, body) {
+        console.log(response)
         if (!error && response.statusCode == 200) {
             res.json({res: body});
         } else {
