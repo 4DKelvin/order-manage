@@ -23,8 +23,9 @@ router.get('/', function (req, res, next) {
 
 router.get('/get_wx', function (req, res) {
     request('http://172.105.232.134:12345/get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
-        console.log(response.body.data);
-        res.json({wx_id: response.body.data.wx_id})
+        json = JSON.parse(response.body)
+        console.log(json.data.wx_id)
+        res.json({wx_id: json.data.wx_id})
     })
 });
 router.get('/tc_wx_bind_all', function (req, res) {
