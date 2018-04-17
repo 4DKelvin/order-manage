@@ -67,7 +67,7 @@ router.get('/upload_order', function (req, res) {
     })
 });
 router.get('/order_by_oid', function (req, res) {
-    request('http://172.105.232.134:12345/order_by_oid' + querystring.stringify({
+    request('http://172.105.232.134:12345/order_by_oid?' + querystring.stringify({
             uid: 'mrr3kX2ToSgyvbP',
             oid: req.query.oid,
             _: new Date().getTime()
@@ -77,26 +77,17 @@ router.get('/order_by_oid', function (req, res) {
 });
 
 router.get('/order', function (req, res, next) {
-    console.log('http://fuwu.jiulvxing.com/autoOta/orderExport',{
-        domain: 'yfh',
-        user: '17373761393',
-        pass: '741852',
-        type: req.query.type,
-        start: req.query.start,
-        end: req.query.end
-    })
     request.post({
-        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport',
-        headers: {
-            "content-type": "application/x-www-form-urlencoded"
-        },
-        form: {
+        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?'+querystring.stringify({
             domain: 'yfh',
             user: '17373761393',
             pass: '741852',
             type: req.query.type,
             start: req.query.start,
             end: req.query.end
+        }),
+        headers: {
+            "content-type": "application/x-www-form-urlencoded"
         }
     }, function (error, response, body) {
         console.log(response)
