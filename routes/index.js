@@ -13,7 +13,6 @@ router.get('/', function (req, res, next) {
         if (!error && response.statusCode == 200) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
-            console.log(response.result.order)
             request('http://45.33.18.90/get_wx', function (e, r, b) {
                 res.render('index', {title: '订单管理', data: response.result, params: req.query, wx_id: r.wx_id});
             })
