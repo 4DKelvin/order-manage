@@ -70,7 +70,9 @@ router.get('/order_by_oid', function (req, res) {
 
 router.get('/order', function (req, res, next) {
     request.post({
-        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?domain=yfh&user=17373761393&pass=741852&type=incr&start=' + req.query.start + '&end=' + req.query.end
+        url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?domain=yfh&user=17373761393&pass=741852&type=incr&start=' +
+        decodeURI(req.query.start) + ':00&end=' +
+        decodeURI(req.query.end) + ':00'
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json({res: body});
