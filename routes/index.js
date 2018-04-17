@@ -40,7 +40,7 @@ router.get('/tc_wx_bind_all', function (req, res) {
         res.json(response);
     })
 });
-router.get('/upload_order', function (req, res) {
+router.post('/upload_order', function (req, res) {
     request('http://172.105.232.134:12345/upload_order' + querystring.stringify({
             uid: 'mrr3kX2ToSgyvbP',
             wx_id: req.query.wx_id,

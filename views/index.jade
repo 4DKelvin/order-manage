@@ -68,14 +68,14 @@ block content
                     input(type='hidden',name="date",value=item.flight.depday)
                     input(type='hidden',name="cabin",value=item.flight.cabin)
                     if item.passenger.length
-                      input(type='hidden',name="name",value=item.passenger.name)
-                      input(type='hidden',name="nid",value=item.passenger.cardnum)
-                    else
                       input(type='hidden',name="name",value=item.passenger[0].name)
                       input(type='hidden',name="nid",value=item.passenger[0].cardnum)
+                    else
+                      input(type='hidden',name="name",value=item.passenger.name)
+                      input(type='hidden',name="nid",value=item.passenger.cardnum)
                     input(type='hidden',name="method_order",value=2)
                     input(type='hidden',name="order_price",value=allprice)
                     input(type='hidden',name="oid",value=item.id)
-                    input(type='submit',value='上传订单')
+                    input(type='submit',value='上传订单',class='am-btn am-btn-xs am-btn-primary')
 
 
