@@ -61,6 +61,17 @@ block content
                 td
                   form(action='/upload_order',method='post')
                     input(type='hidden',name="wx_id",value=wx_id)
-                    input(type='submit',value='上传')
+                    input(type='hidden',name="phone",value=item.contactmob)
+                    input(type='hidden',name="dep",value=item.flight.dep)
+                    input(type='hidden',name="arr",value=item.flight.arr)
+                    input(type='hidden',name="flight_no",value=item.flight.code)
+                    input(type='hidden',name="date",value=item.flight.depday)
+                    input(type='hidden',name="cabin",value=item.flight.cabin)
+                    input(type='hidden',name="name",value=item.passenger.name)
+                    input(type='hidden',name="nid",value=item.passenger.cardnum)
+                    input(type='hidden',name="method_order",value=2)
+                    input(type='hidden',name="order_price",value=allprice)
+                    input(type='hidden',name="oid",value=item.id)
+                    input(type='submit',value='上传订单')
 
 
