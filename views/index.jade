@@ -76,7 +76,7 @@ block content
                     input(type='hidden',name="cabin",value=item.flight.cabin)
                     input(type='hidden',name="passengers",value=JSON.stringify(item.passenger))
                     input(type='hidden',name="method_order",value=2)
-                    input(type='hidden',name="order_price",value=allprice)
+                    input(type='hidden',name="order_price",value=item.allprice)
                     input(type='hidden',name="oid",value=item.id)
                     input(type='submit',value='一键下单',class='am-btn am-btn-xs am-btn-primary')
 

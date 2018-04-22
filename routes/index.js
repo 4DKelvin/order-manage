@@ -6,32 +6,33 @@ var querystring = require('querystring');
 var fs = require('fs');
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    request('http://45.33.18.90/order?' + querystring.stringify({
-            start: req.query.start,
-            end: req.query.end
-        }), function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            response = JSON.parse(body);
-            response = xml2json.parser(response.res);
-            request('http://45.33.18.90/get_wx', function (e, r, b) {
-                request('http://45.33.18.90/get_bind_status', function (e1, r1, b1) {
+    request('http://45.33.18.90/get_wx', function (e, r, b) {
+        request('http://45.33.18.90/get_bind_status', function (e1, r1, b1) {
+            var status = JSON.parse(r1.body).data;
+            request('http://45.33.18.90/order?' + querystring.stringify({
+                    start: req.query.start,
+                    end: req.query.end
+                }), function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    response = JSON.parse(body);
+                    response = xml2json.parser(response.res);
                     res.render('index', {
                         title: '订单管理',
                         data: response.result,
-                        coupon: r1.data.coupon,
-                        used_coupon: r1.data.used_coupon,
+                        coupon: status.coupon,
+                        used_coupon: status.used_coupon,
                         params: {
-                            phone: r1.data.phone,
-                            pwd: r1.data.pwd,
-                            wx_id: r1.data.wx_id,
+                            phone: status.phone,
+                            pwd: status.pwd,
+                            wx_id: status.wx_id,
                             start: req.query.start,
                             end: req.query.end
                         }
                     });
-                });
-            })
-        }
-    });
+                }
+            });
+        });
+    })
 });
 
 
