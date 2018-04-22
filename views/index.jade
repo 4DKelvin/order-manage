@@ -56,29 +56,28 @@ block content
                     span #{item.passenger.gender} &nbsp;
                     span #{item.passenger.cardnum} &nbsp;
                 td
-                  span #{item.contact}
+                  if item.contact.length
+                    span #{item.contact}
+                  else
+                    span 无联系人信息
                   br
+
                   span #{item.contactmob}
                   br
                   span #{item.status}
                 td
                   form(action='/upload_order',method='post')
-                    input(type='hidden',name="wx_id",value=wx_id)
-                    input(type='hidden',name="phone",value=item.contactmob)
+                    input(type='hidden',name="wx_id",value=params.wx_id)
+                    input(type='hidden',name="phone",value=params.phone)
                     input(type='hidden',name="dep",value=item.flight.dep)
                     input(type='hidden',name="arr",value=item.flight.arr)
                     input(type='hidden',name="flight_no",value=item.flight.code)
                     input(type='hidden',name="date",value=item.flight.depday)
                     input(type='hidden',name="cabin",value=item.flight.cabin)
-                    if item.passenger.length
-                      input(type='hidden',name="name",value=item.passenger[0].name)
-                      input(type='hidden',name="nid",value=item.passenger[0].cardnum)
-                    else
-                      input(type='hidden',name="name",value=item.passenger.name)
-                      input(type='hidden',name="nid",value=item.passenger.cardnum)
+                    input(type='hidden',name="passengers",value=JSON.stringify(item.passenger))
                     input(type='hidden',name="method_order",value=2)
                     input(type='hidden',name="order_price",value=allprice)
                     input(type='hidden',name="oid",value=item.id)
-                    input(type='submit',value='上传订单',class='am-btn am-btn-xs am-btn-primary')
+                    input(type='submit',value='一键下单',class='am-btn am-btn-xs am-btn-primary')
 
 

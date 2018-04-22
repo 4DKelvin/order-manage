@@ -14,11 +14,20 @@ router.get('/', function (req, res, next) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
             request('http://45.33.18.90/get_wx', function (e, r, b) {
-                res.render('index', {
-                    title: '订单管理', data: response.result, params: {
-                        start: req.query.start,
-                        end: req.query.end
-                    }, wx_id: r.wx_id
+                request('http://45.33.18.90/get_bind_status', function (e1, r1, b1) {
+                    res.render('index', {
+                        title: '订单管理',
+                        data: response.result,
+                        coupon: r1.data.coupon,
+                        used_coupon: r1.data.used_coupon,
+                        params: {
+                            phone: r1.data.phone,
+                            pwd: r1.data.pwd,
+                            wx_id: r1.data.wx_id,
+                            start: req.query.start,
+                            end: req.query.end
+                        }
+                    });
                 });
             })
         }
@@ -53,24 +62,25 @@ router.get('/get_bind_status', function (req, res) {
     });
 });
 router.post('/upload_order', function (req, res) {
-    request('http://172.105.232.134:12345/upload?' + querystring.stringify({
-            uid: 'mrr3kX2ToSgyvbP',
-            wx_id: req.query.wx_id,
-            phone: req.query.phone,
-            dep: req.query.dep,
-            arr: req.query.arr,
-            flight_no: req.query.flight_no,
-            date: req.query.date,
-            cabin: req.query.cabin,
-            name: req.query.name,
-            nid: req.query.nid,
-            method_order: req.query.method_order,
-            order_price: req.query.order_price,
-            oid: req.query.oid,
-            _: new Date().getTime()
-        }), function (error, response, body) {
-        res.json(response);
-    })
+    console.log(req);
+    //request('http://172.105.232.134:12345/upload?' + querystring.stringify({
+    //        uid: 'mrr3kX2ToSgyvbP',
+    //        wx_id: req.query.wx_id,
+    //        phone: req.query.phone,
+    //        dep: req.query.dep,
+    //        arr: req.query.arr,
+    //        flight_no: req.query.flight_no,
+    //        date: req.query.date,
+    //        cabin: req.query.cabin,
+    //        name: req.query.name,
+    //        nid: req.query.nid,
+    //        method_order: req.query.method_order,
+    //        order_price: req.query.order_price,
+    //        oid: req.query.oid,
+    //        _: new Date().getTime()
+    //    }), function (error, response, body) {
+    //    res.json(response);
+    //})
 });
 router.get('/order_by_oid', function (req, res) {
     request('http://172.105.232.134:12345/order_by_oid?' + querystring.stringify({
