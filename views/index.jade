@@ -45,13 +45,16 @@ block content
                   span -
                   span #{item.flight.arrtime}
                 td
-                  span #{item.passenger.name}
-                  br
-                  span #{item.passenger.birthday}
-                  br
-                  span #{item.passenger.gender}
-                  br
-                  span #{item.passenger.cardnum}
+                  if item.passenger instanceof Array
+                    each pgr in item.passenger
+                      pan #{pgr.name} &nbsp;
+                      span #{pgr.gender} &nbsp;
+                      span #{pgr.cardnum} &nbsp;
+                      br
+                  else
+                    span #{item.passenger.name} &nbsp;
+                    span #{item.passenger.gender} &nbsp;
+                    span #{item.passenger.cardnum} &nbsp;
                 td
                   span #{item.contact}
                   br

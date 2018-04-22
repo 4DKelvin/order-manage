@@ -14,8 +14,13 @@ router.get('/', function (req, res, next) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
             request('http://45.33.18.90/get_wx', function (e, r, b) {
-                console.log(r);
-                res.render('index', {title: '订单管理', data: response.result, params: req.query, wx_id: r.wx_id});
+                console.log(response.result.order[1]);
+                res.render('index', {
+                    title: '订单管理', data: response.result, params: {
+                        start: req.query.start,
+                        end: req.query.end
+                    }, wx_id: r.wx_id
+                });
             })
         }
     });
