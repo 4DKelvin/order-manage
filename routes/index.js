@@ -44,7 +44,7 @@ router.get('/get_bind_status', function (req, res) {
                 uid: 'mrr3kX2ToSgyvbP',
                 wx_id: JSON.parse(data).data.wx_id
             }), function (error, response, body) {
-            res.json(response.body);
+            res.json(JSON.parse(response.body));
         })
     });
 });
