@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/get_wx', function (req, res) {
     try {
-        fs.readFile('wx_id.json',function(e,data){
+        fs.readFile('wx_id.json', function (e, data) {
             var json = JSON.parse(data);
             res.json({wx_id: json.data.wx_id})
         });
@@ -38,21 +38,18 @@ router.get('/get_wx', function (req, res) {
     }
 });
 
-router.get('/tc_wx_bind_all', function (req, res) {
-    request('http://172.105.232.134:12345/tc_wx_bind_all' + querystring.stringify({
-            uid: 'mrr3kX2ToSgyvbP',
-            wx_id: req.query.wx_id,
-            name_1: req.query.name_1,
-            name_2: req.query.name_2,
-            name_3: req.query.name_3,
-            name_4: req.query.name_4,
-            _: new Date().getTime()
-        }), function (error, response, body) {
-        res.json(response);
-    })
+router.get('/get_bind_status', function (req, res) {
+    fs.readFile('wx_id.json', function (e, data) {
+        request('http://172.105.232.134:12345/get_bind_status?' + querystring.stringify({
+                uid: 'mrr3kX2ToSgyvbP',
+                wx_id: JSON.parse(data).data.wx_id
+            }), function (error, response, body) {
+            res.json(response);
+        })
+    });
 });
 router.post('/upload_order', function (req, res) {
-    request('http://172.105.232.134:12345/upload_order' + querystring.stringify({
+    request('http://172.105.232.134:12345/upload?' + querystring.stringify({
             uid: 'mrr3kX2ToSgyvbP',
             wx_id: req.query.wx_id,
             phone: req.query.phone,
