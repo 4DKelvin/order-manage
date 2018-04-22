@@ -23,19 +23,20 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/get_wx', function (req, res) {
-    var data = fs.readFileSync('wx_id.json');
-    if (data) {
-        var json = JSON.parse(data)
+    try {
+        var data = fs.readFileSync('wx_id.json');
+        var json = JSON.parse(data);
         res.json({wx_id: json.data.wx_id})
-    } else {
+    } catch (e) {
         request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
-            fs.writeFile('wx_id.json', response.body, function (err) {
-                var json = JSON.parse(response.body)
-                res.json({wx_id: json.data.wx_id})
+            fs.writeFile('wx_id.json', response.body, function () {
+                var json = JSON.parse(response.body);
+                res.json({wx_id: json.data.wx_id});
             });
         })
     }
 });
+
 router.get('/tc_wx_bind_all', function (req, res) {
     request('http://172.105.232.134:12345/tc_wx_bind_all' + querystring.stringify({
             uid: 'mrr3kX2ToSgyvbP',
