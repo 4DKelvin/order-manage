@@ -3,7 +3,7 @@ var router = express.Router();
 var request = require('request');
 var xml2json = require('node-xml2json');
 var querystring = require('querystring');
-
+var fs = require('fs');
 /* GET home page. */
 router.get('/', function (req, res, next) {
     request('http://45.33.18.90/order?' + querystring.stringify({
@@ -14,6 +14,7 @@ router.get('/', function (req, res, next) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
             request('http://45.33.18.90/get_wx', function (e, r, b) {
+                console.log(r);
                 res.render('index', {title: '订单管理', data: response.result, params: req.query, wx_id: r.wx_id});
             })
         }
@@ -22,11 +23,18 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/get_wx', function (req, res) {
-    request('http://172.105.232.134:12345/get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
-        json = JSON.parse(response.body)
-        console.log(json.data.wx_id)
+    var data = fs.readFileSync('wx_id.json');
+    if (data) {
+        var json = JSON.parse(data)
         res.json({wx_id: json.data.wx_id})
-    })
+    } else {
+        request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
+            fs.writeFile('wx_id.json', response.body, function (err) {
+                var json = JSON.parse(response.body)
+                res.json({wx_id: json.data.wx_id})
+            });
+        })
+    }
 });
 router.get('/tc_wx_bind_all', function (req, res) {
     request('http://172.105.232.134:12345/tc_wx_bind_all' + querystring.stringify({
