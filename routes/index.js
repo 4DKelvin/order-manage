@@ -24,9 +24,10 @@ router.get('/', function (req, res, next) {
 
 router.get('/get_wx', function (req, res) {
     try {
-        var data = fs.readFileSync('wx_id.json');
-        var json = JSON.parse(data);
-        res.json({wx_id: json.data.wx_id})
+        fs.readFile('wx_id.json',function(e,data){
+            var json = JSON.parse(data);
+            res.json({wx_id: json.data.wx_id})
+        });
     } catch (e) {
         request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
             fs.writeFile('wx_id.json', response.body, function () {
