@@ -14,7 +14,6 @@ router.get('/', function (req, res, next) {
             response = JSON.parse(body);
             response = xml2json.parser(response.res);
             request('http://45.33.18.90/get_wx', function (e, r, b) {
-                console.log(response.result.order[1]);
                 res.render('index', {
                     title: '订单管理', data: response.result, params: {
                         start: req.query.start,
