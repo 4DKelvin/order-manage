@@ -55,3 +55,12 @@ html.no-js.fixed-layout
       $('.datetime-picker').datetimepicker({
         format: 'yyyy-m-dd hh:ii'
       });
+      $('.am-btn-order').on('click', function () {
+        var params = {};
+        $(this).parent().find('input[type=hidden]').each(function () {
+          params[$(this).attr('name')] = $(this).val()
+        });
+        $.post('/upload_order', params, function (r) {
+          alert(r.msg);
+        });
+      });

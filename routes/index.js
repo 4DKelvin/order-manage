@@ -63,25 +63,42 @@ router.get('/get_bind_status', function (req, res) {
     });
 });
 router.post('/upload_order', function (req, res) {
-    console.log(req);
-    //request('http://172.105.232.134:12345/upload?' + querystring.stringify({
-    //        uid: 'mrr3kX2ToSgyvbP',
-    //        wx_id: req.query.wx_id,
-    //        phone: req.query.phone,
-    //        dep: req.query.dep,
-    //        arr: req.query.arr,
-    //        flight_no: req.query.flight_no,
-    //        date: req.query.date,
-    //        cabin: req.query.cabin,
-    //        name: req.query.name,
-    //        nid: req.query.nid,
-    //        method_order: req.query.method_order,
-    //        order_price: req.query.order_price,
-    //        oid: req.query.oid,
-    //        _: new Date().getTime()
-    //    }), function (error, response, body) {
-    //    res.json(response);
-    //})
+    var order = req.body;
+    order.passengers = JSON.parse(order.passengers);
+    Promise.all(order.passengers.map(function (passenger) {
+        return new Promise(function (resolve, reject) {
+            request('http://172.105.232.134:12345/upload_order?' + querystring.stringify({
+                    uid: 'mrr3kX2ToSgyvbP',
+                    wx_id: order.wx_id,
+                    phone: order.phone,
+                    dep: order.dep,
+                    arr: order.arr,
+                    flight_no: order.flight_no,
+                    date: order.date,
+                    cabin: order.cabin,
+                    name: passenger.name,
+                    nid: passenger.cardnum,
+                    method_order: order.method_order,
+                    order_price: order.order_price / passenger.length,
+                    oid: order.oid
+                }), function (err, res) {
+                if (err) return reject(err);
+                resolve(JSON.parse(res.body))
+            });
+        });
+    })).then(function () {
+        var result = {};
+        Array.prototype.forEach.call(arguments, function (e) {
+            result = e;
+        });
+        res.json({
+            msg: result.map(function (e, i) {
+                return order.passengers[i].name + ' ' + (e.status == -1 ? '下单失败' : '下单成功') + ' 原因:' + e.desc;
+            }).join('\n')
+        });
+    }, function () {
+        res.json({msg: '下单失败'})
+    });
 });
 router.get('/order_by_oid', function (req, res) {
     request('http://172.105.232.134:12345/order_by_oid?' + querystring.stringify({

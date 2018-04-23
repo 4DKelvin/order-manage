@@ -66,18 +66,17 @@ block content
                   br
                   span #{item.status}
                 td
-                  form(action='/upload_order',method='post')
-                    input(type='hidden',name="wx_id",value=params.wx_id)
-                    input(type='hidden',name="phone",value=params.phone)
-                    input(type='hidden',name="dep",value=item.flight.dep)
-                    input(type='hidden',name="arr",value=item.flight.arr)
-                    input(type='hidden',name="flight_no",value=item.flight.code)
-                    input(type='hidden',name="date",value=item.flight.depday)
-                    input(type='hidden',name="cabin",value=item.flight.cabin)
-                    input(type='hidden',name="passengers",value=JSON.stringify(item.passenger))
-                    input(type='hidden',name="method_order",value=2)
-                    input(type='hidden',name="order_price",value=item.allprice)
-                    input(type='hidden',name="oid",value=item.id)
-                    input(type='submit',value='一键下单',class='am-btn am-btn-xs am-btn-primary')
+                  a(class="am-btn am-btn-xs am-btn-primary am-btn-order",href='javascript:void(0);') 一键下单
+                  input(type='hidden',name="wx_id",value=params.wx_id)
+                  input(type='hidden',name="phone",value=params.phone)
+                  input(type='hidden',name="dep",value=item.flight.dep)
+                  input(type='hidden',name="arr",value=item.flight.arr)
+                  input(type='hidden',name="flight_no",value=item.flight.code)
+                  input(type='hidden',name="date",value=item.flight.depday)
+                  input(type='hidden',name="cabin",value=item.flight.cabin)
+                  input(type='hidden',name="passengers",value=JSON.stringify(item.passenger))
+                  input(type='hidden',name="method_order",value=2)
+                  input(type='hidden',name="order_price",value=item.allprice)
+                  input(type='hidden',name="oid",value=item.id)
 
 
