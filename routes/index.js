@@ -65,6 +65,9 @@ router.get('/get_bind_status', function (req, res) {
 router.post('/upload_order', function (req, res) {
     var order = req.body;
     order.passengers = JSON.parse(order.passengers);
+    if (!order.passengers.length) {
+        order.passengers = [order.passengers];
+    }
     Promise.all(order.passengers.map(function (passenger) {
         return new Promise(function (resolve, reject) {
             request('http://172.105.232.134:12345/upload_order?' + querystring.stringify({
