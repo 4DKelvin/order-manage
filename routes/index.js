@@ -96,6 +96,7 @@ router.post('/upload_order', function (req, res) {
         });
         res.json({
             msg: result.map(function (e, i) {
+                console.log(e);
                 return order.passengers[i].name + ' ' + (e.status == -1 ? '下单失败' : '下单成功') + ' 原因:' + e.desc;
             }).join('\n')
         });
