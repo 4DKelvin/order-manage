@@ -77,7 +77,7 @@ html.no-js.fixed-layout
       $('.datetime-picker').datetimepicker({
         format: 'yyyy-m-dd hh:ii'
       });
-      $('.am-btn-refresh').on('click', function () {
+      $(document).on('click', '.am-btn-refresh', function () {
         var self = $(this);
         self.attr('disabled', true);
         $.get('/refresh', {
@@ -87,7 +87,7 @@ html.no-js.fixed-layout
           handler(r);
         })
       });
-      $('.am-btn-order').on('click', function () {
+      $(document).on('click', '.am-btn-order', function () {
         var self = $(this);
         self.attr('disabled', true);
         $.post('/bind', {
