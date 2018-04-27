@@ -30,16 +30,16 @@ block content
         table.am-table.am-table-bd.am-table-striped.admin-content-table.am-text-nowrap
           thead
             tr
-              th.am-hide-md ID
+              th.am-hide-sm ID
               th 金额
               th 航班
-              th.am-hide-md 乘客
+              th.am-hide-sm 乘客
               th 联系人
               th 管理
           tbody
             each item in data
               tr
-                td
+                td.am-hide-sm
                   span #{item.id}
                   br
                   span #{item.createtime}
@@ -52,7 +52,7 @@ block content
                   span #{item.flight['deptime']}
                   span -
                   span #{item.flight['arrtime']}
-                td
+                td.am-hide-sm
                   if item.passenger instanceof Array
                     each pgr in item.passenger
                       pan #{pgr['name']} &nbsp;
@@ -74,6 +74,6 @@ block content
                   br
                   span #{item.status}
                 td
-                  a(data-am-modal="{target: '#model'}", class="am-btn am-btn-xs am-btn-default am-btn-order",order=item.id,href='javascript:void(0);') 一键下单
+                  a(class="am-btn am-btn-xs am-btn-default am-btn-order",order=item.id,href='javascript:void(0);') 一键下单
 
 

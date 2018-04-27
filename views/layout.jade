@@ -56,9 +56,17 @@ html.no-js.fixed-layout
         format: 'yyyy-m-dd hh:ii'
       });
       $('.am-btn-order').on('click', function () {
+        var self = $(this);
+        self.attr('disabled', true);
         $.post('/bind', {
           order_id: $(this).attr('order')
         }, function (r) {
-          console.log(r);
+          self.attr('disabled', false);
+          $('#modal .am-modal-bd').html(JSON.stringify(r));
+          $('#modal').modal();
+        }, function (e) {
+          self.attr('disabled', false);
+          $('#modal .am-modal-bd').html(e);
+          $('#modal').modal();
         });
       });
