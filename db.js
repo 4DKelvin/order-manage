@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({});
 mongoose.connect('mongodb://localhost/orders')
 const OrderModel = mongoose.model('Order', schema);
+const ConfigModel = mongoose.model('Config', schema);
 
 module.exports = {
-    Order: OrderModel
+    Order: OrderModel,
+    Config: ConfigModel
 };
 
 //setInterval(function () {

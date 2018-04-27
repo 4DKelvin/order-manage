@@ -1,16 +1,37 @@
-var express = require('express');
-var router = express.Router();
-var request = require('request');
-var xml2json = require('node-xml2json');
-var querystring = require('querystring');
-var fs = require('fs');
-const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+const request = require('request');
+const querystring = require('querystring').stringify;
+const Order = require('../db').Order;
+const Config = require('../db').Config;
+
+function getWxId() {
+    return new Promise(function (resolve, reject) {
+        Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
+            if (err)reject(err);
+            else if (res) resolve(res);
+            else {
+                request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
+                    if (error)reject(error);
+                    else {
+                        res = JSON.parse(response.body);
+                        new Config({key: 'wx_id', value: res.data.wx_id}).save(function (e, c) {
+                            if (e)reject(e);
+                            else resolve(c.value);
+                        });
+                    }
+                })
+            }
+        })
+    });
+}
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     request('http://45.33.18.90/get_wx', function (e, r, b) {
         request('http://45.33.18.90/get_bind_status', function (e1, r1, b1) {
             var status = JSON.parse(r1.body).data;
-            request('http://45.33.18.90/order?' + querystring.stringify({
+            request('http://45.33.18.90/order?' + querystring({
                     start: req.query.start,
                     end: req.query.end
                 }), function (error, response, body) {
@@ -38,19 +59,11 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/get_wx', function (req, res) {
-    try {
-        fs.readFile('wx_id.json', function (e, data) {
-            var json = JSON.parse(data);
-            res.json({wx_id: json.data.wx_id})
-        });
-    } catch (e) {
-        request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
-            fs.writeFile('wx_id.json', response.body, function () {
-                var json = JSON.parse(response.body);
-                res.json({wx_id: json.data.wx_id});
-            });
-        })
-    }
+    getWxId().then(function (r) {
+        res.json({wx_id: r});
+    }, function (e) {
+        res.send(500)
+    });
 });
 
 router.get('/get_bind_status', function (req, res) {
