@@ -41,7 +41,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/bind', function (req, res, next) {
-    console.log(req.body);
     utils.bindUser(req.body.order_id).then(function (r) {
         res.json(r);
     }, function (e) {

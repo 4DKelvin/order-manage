@@ -185,6 +185,7 @@ var api = {
     },
     bindUser: function (order_id) {
         return new Promise(function (resolve, reject) {
+            console.log(order_id)
             var self = this;
             Order.findOne({id: order_id}, function (err, order) {
                 if (err)reject(err);
