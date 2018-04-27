@@ -4,8 +4,9 @@ const request = require('request');
 const querystring = require('querystring').stringify;
 const Order = require('../db').Order;
 const Config = require('../db').Config;
+const uid = 'mrr3kX2ToSgyvbP';
 
-function getWxId() {
+function get_wxid() {
     return new Promise(function (resolve, reject) {
         Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
             if (err)reject(err);
@@ -13,7 +14,7 @@ function getWxId() {
                 resolve(res.get('value'));
             }
             else {
-                request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
+                request('http://172.105.232.134:12345/new_get_wx?uid=' + uid, function (error, response, body) {
                     if (error || body.data.wx_id)reject(error);
                     else {
                         new Config({key: 'wx_id', value: body.data.wx_id}).save(function (e, c) {
@@ -26,6 +27,23 @@ function getWxId() {
         })
     });
 }
+
+function get_status() {
+    return new Promise(function (resolve, reject) {
+        get_wxid().then(function (wx_id) {
+            request('http://172.105.232.134:12345/get_bind_status?' + querystring.stringify({
+                    uid: uid,
+                    wx_id: wx_id
+                }), function (error, response, body) {
+                if (error)reject(error);
+                else resolve(body);
+            })
+        }, function (err) {
+            reject(err);
+        })
+    });
+}
+
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -60,21 +78,18 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/get_wx', function (req, res) {
-    getWxId().then(function (r) {
+    get_wxid().then(function (r) {
         res.json({wx_id: r});
     }, function (e) {
-        res.send(500)
+        res.json(e)
     });
 });
 
 router.get('/get_bind_status', function (req, res) {
-    fs.readFile('wx_id.json', function (e, data) {
-        request('http://172.105.232.134:12345/get_bind_status?' + querystring.stringify({
-                uid: 'mrr3kX2ToSgyvbP',
-                wx_id: JSON.parse(data).data.wx_id
-            }), function (error, response, body) {
-            res.json(JSON.parse(response.body));
-        })
+    get_status().then(function (r) {
+        res.json(r);
+    }, function (e) {
+        res.json(e)
     });
 });
 
