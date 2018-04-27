@@ -9,7 +9,7 @@ const n = function (num) {
 };
 const format = function (date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
-    return [d.getFullYear() + n(d.getMonth() + 1), n(d.getDate())].join('-') + ' ' +
+    return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' ' +
         [n(d.getHours()), n(d.getMinutes()), n(d.getSeconds())].join(':');
 };
 /* GET home page. */
