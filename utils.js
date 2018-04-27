@@ -31,6 +31,7 @@ var api = {
     _bindAll: function (wx_id, names) {
         return new Promise(function (resolve, reject) {
             var params = {
+                uid: uid,
                 wx_id: wx_id
             };
             names.forEach(function (name, index) {
