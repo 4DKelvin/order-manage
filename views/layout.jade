@@ -51,6 +51,7 @@ html.no-js.fixed-layout
     script(src='http://cdn.amazeui.org/amazeui/2.6.2/js/amazeui.min.js')
     script(src='/javascripts/amazeui.datetimepicker.min.js')
     script(type='text/javascript').
+      var temp = $('#modal .am-modal-bd').clone();
       $('.datetime-picker').datetimepicker({
         format: 'yyyy-m-dd hh:ii'
       });
@@ -62,7 +63,21 @@ html.no-js.fixed-layout
         }, function (r) {
           self.attr('disabled', false);
           if (r instanceof Object) {
-            //$('#modal .am-modal-bd').html(JSON.stringify(r));
+            var body = temp.clone();
+            var item = temp.find('#items .item').clone();
+            var user_status = Number(r.user.valid) == 88 && Number(r.user.bind_cnt) == 4;
+            body.find('#user_status').html(user_status ? '已绑定' : '未绑定');
+            body.find('#order_phone').html(r.user.phone);
+            body.find('#order_password').html(r.user.pwd);
+            body.find('#source_price').html(r.order.allprice);
+            body.find('#items').html('');
+            r.user.coupon.forEach(function (c) {
+              var line = item.clone();
+              line.find('.name').html(c.name);
+              line.find('.amt').html(c.amt);
+              line.appendT(body.find('#items'));
+            });
+            $('#modal .am-modal-bd').html(body);
           } else {
             $('#modal .am-modal-bd').html(r);
           }

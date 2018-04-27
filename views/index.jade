@@ -21,40 +21,40 @@ block content
       .am-modal-bd.am-text-left
         .am-form
           hr.am-margin-bottom-xs
-          .row
-            .am-u-sm-12.am-margin-bottom-xs
+          .row.commons
+            .am-u-sm-12
               stong.am-text-xs 用户状态:
-              span.am-text-xs  未绑定 &nbsp;
+              span.am-text-xs#user_status  未绑定
               .am-btn.am-fr.am-btn-xs.am-btn-warning.am-btn-refresh 刷新
           .row
-            .am-u-sm-12.am-margin-bottom-xs
+            .am-u-sm-12
               stong.am-text-xs 订单状态:
-              span.am-text-xs  未绑定 &nbsp;
-          hr.am-margin-bottom-xs
-          .row.am-scrollable-horizontal
-            table.am-table.am-table-compact.am-table-striped.am-margin-bottom-xs.am-text-nowrap
-              tr
-                td
-                  .am-radio.am-margin-xs
-                    label
-                      input(type='radio',name='coupon',value='0')
-                      span.am-text-xs 韩浩
-              tr
-                td
-                  .am-radio.am-margin-xs
-                    label
-                      input(type='radio',name='coupon',value='0')
-                      span.am-text-xs 韩浩
-          hr.am-margin-bottom-xs.am-margin-top-xs
+              span.am-text-xs#order_status  未绑定
+          .row
+            .am-u-sm-12
+              stong.am-text-xs 手机号:
+              span.am-text-xs#order_phone
+          .row
+            .am-u-sm-12.am-margin-bottom-xs
+              stong.am-text-xs 密码:
+              span.am-text-xs#order_password
+          hr
+          .row#items
+            .item.am-u-sm-12
+              span.am-text-xs 券&nbsp;:&nbsp;
+              span.am-text-xs.name 123123
+              span &nbsp;-&nbsp;
+              span.am-text-xs.amt 123
+          hr.am-margin-top-xs
           .row
             .am-u-sm-12
               .am-form-group
                 label.am-text-xs
                   span.am-padding-right-sm 下单价格
                   span 原价:
-                  span 100
+                  span#source_price
 
-                input.am-input-sm(type='text',name='price')
+                input#price.am-input-sm(type='text',name='price')
           .row
             .am-u-sm-12.am-margin-bottom
               .am-btn.am-btn-sm.am-btn-block.am-btn-success.am-btn-submit 提交
