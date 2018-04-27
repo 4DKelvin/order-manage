@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const querystring = require('querystring').stringify;
+const qs = require('querystring').stringify;
 const Order = require('../db').Order;
 const Config = require('../db').Config;
 const uid = 'mrr3kX2ToSgyvbP';
@@ -31,7 +31,7 @@ function get_wxid() {
 function get_status() {
     return new Promise(function (resolve, reject) {
         get_wxid().then(function (wx_id) {
-            request('http://172.105.232.134:12345/get_bind_status?' + querystring.stringify({
+            request('http://172.105.232.134:12345/get_bind_status?' + qs({
                     uid: uid,
                     wx_id: wx_id
                 }), function (error, response, body) {
