@@ -197,7 +197,7 @@ var api = {
             Order.findOne({id: Number(order_id)}, function (err, order) {
                 if (err)reject(err);
                 else if (!order)reject(order);
-                else if (order.get('wx_id')) {
+                else if (order.get('wx_id') && order.get('phone')) {
                     api._refresh(order.get('wx_id')).then(function (user) {
                         resolve(user);
                     }, function (error) {
