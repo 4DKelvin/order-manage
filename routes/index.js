@@ -4,6 +4,7 @@ var request = require('request');
 var xml2json = require('node-xml2json');
 var querystring = require('querystring');
 var fs = require('fs');
+const mongoose = require('mongoose');
 /* GET home page. */
 router.get('/', function (req, res, next) {
     request('http://45.33.18.90/get_wx', function (e, r, b) {
@@ -62,6 +63,7 @@ router.get('/get_bind_status', function (req, res) {
         })
     });
 });
+
 router.post('/upload_order', function (req, res) {
     var order = req.body;
     order.passengers = JSON.parse(order.passengers);
@@ -96,7 +98,6 @@ router.post('/upload_order', function (req, res) {
         });
         res.json({
             msg: result.map(function (e, i) {
-                console.log(e);
                 return order.passengers[i].name + ' ' + (e.status == -1 ? '下单失败' : '下单成功') + ' 原因:' + e.desc;
             }).join('\n')
         });
