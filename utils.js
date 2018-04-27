@@ -185,10 +185,8 @@ var api = {
     },
     bindUser: function (order_id) {
         return new Promise(function (resolve, reject) {
-            console.log(order_id);
             var self = this;
-            Order.findOne({id: order_id}, function (err, order) {
-                console.log(order);
+            Order.findOne({id: Number(order_id)}, function (err, order) {
                 if (err)reject(err);
                 else if (!order)reject(order);
                 else if (order.get('wx_id')) {
@@ -200,7 +198,7 @@ var api = {
                 } else {
                     var passenger = order.get('passenger'),
                         names = [];
-                    console.log(passenger)
+                    console.log(passenger);
                     if (passenger instanceof Array) {
                         passenger.forEach(function (p) {
                             names.push(p.name);
@@ -235,7 +233,7 @@ var api = {
     placeOrder: function (order_id, price) {
         return new Promise(function (resolve, reject) {
             var self = this;
-            Order.findOne({id: order_id}, function (err, order) {
+            Order.findOne({id: Number(order_id)}, function (err, order) {
                 if (err)reject(err);
                 else {
                     self._order(order, price).then(function (result) {
