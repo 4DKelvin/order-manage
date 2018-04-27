@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
     utils.orders(decodeURIComponent(req.query.start), decodeURIComponent(req.query.end), req.query.page || 0).then(function (r) {
         res.render('index', {
             title: '订单管理',
-            data: r,
+            data: JSON.parse(JSON.stringify(r)),
             params: {
                 start: decodeURIComponent(req.query.start),
                 end: decodeURIComponent(req.query.end),
