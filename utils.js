@@ -135,7 +135,7 @@ var api = {
                     var res = JSON.parse(body.toString());
                     if (error)reject(error);
                     else if (Number(res.status) == 0) {
-                        Order.update({id: order.get('id')}, {upload: 'success'}, {
+                        Order.update({id: Number(order.get('id'))}, {upload: 'success'}, {
                             strict: false,
                             upsert: true
                         }, function (e, raw) {
@@ -169,7 +169,7 @@ var api = {
                     var res = JSON.parse(body.toString());
                     if (error)reject(error);
                     else if (Number(res.status) == 0) {
-                        Order.update({id: order.id}, {upload: 'success'}, {
+                        Order.update({id: Number(order.get('id'))}, {upload: 'success'}, {
                             strict: false,
                             upsert: true
                         }, function (e, raw) {
@@ -177,7 +177,7 @@ var api = {
                             else resolve(order);
                         });
                     } else {
-                        Order.update({id: order.id}, {upload: 'failure'}, {
+                        Order.update({id: Number(order.get('id'))}, {upload: 'failure'}, {
                             strict: false,
                             upsert: true
                         }, function (e, raw) {
@@ -230,20 +230,17 @@ var api = {
                     api._getUnBindUser().then(function (res) {
                         console.log(res);
                         api._bindAll(res.get('wx_id'), names).then(function (r) {
-                            console.log(r,'res');
-                            Order.update({id: order_id}, {
+                            Order.update({id: Number(order_id)}, {
                                 wx_id: res.get('wx_id'),
                                 phone: res.get('phone')
                             }, {
                                 strict: false,
                                 upsert: true
                             }, function (e, raw) {
-                                consol.log(raw,'ok')
                                 if (e)reject(e);
                                 else resolve(r);
                             });
                         }, function (e) {
-                            console.log(e,'err');
                             reject(e)
                         })
                     }, function (err) {
