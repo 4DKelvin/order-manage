@@ -53,11 +53,11 @@ block content
                     span #{item.passenger['gender']} &nbsp;
                     span #{item.passenger['cardnum']} &nbsp;
                 td
-                  //if item.contact.length
-                  //  span #{item.contact}
-                  //else
-                  //  span 无联系人信息
-                  //br
+                  if item.contact
+                    span #{item.contact}
+                  else
+                    span 无联系人信息
+                  gbr
 
                   span #{item.contactmob}
                   br
