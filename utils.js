@@ -74,6 +74,7 @@ var api = {
                 var res = JSON.parse(body.toString());
                 if (error)reject(error);
                 else {
+                    console.log(res);
                     User.update({
                         wx_id: wx_id
                     }, {
