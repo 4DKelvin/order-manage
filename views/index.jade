@@ -13,42 +13,51 @@ block content
     .am-u-sm-12.am-u-md-4
 
   hr
-  .am-form
-    hr
-    .row
-      .am-u-sm-12.am-u-md-8
-        stong 当前状态:
-        span 未绑定
-      .am-u-sm-12.am-u-md-4
-        .am-btn.am-btn-xs.am-btn-default.am-btn-refresh 刷新
-    hr
-    .row
-      .am-u-sm-12.am-u-md-4
-        .am-radio
-          label
-            input(type='radio',name='coupon',value='0')
-            | 韩浩
-      .am-u-sm-12.am-u-md-4
-        .am-radio
-          label
-            input(type='radio',name='coupon',value='0')
-            | 韩浩
-    hr
-    .row
-      .am-u-sm-12
-        .am-form-group
-          label 下单价格
-          input(type='text',name='price')
-    .row
-      .am-u-sm-12
-        .am-btn.am-btn-xs.am-btn-default.am-btn-refresh 提交
-
   #modal.am-modal.am-modal-no-btn(tabindex='-1')
     .am-modal-dialog
       .am-modal-hd
         | 快速下单
         a.am-close.am-close-spin(href='javascript: void(0)', data-am-modal-close='') ×
-      .am-modal-bd
+      .am-modal-bd.am-text-left
+        .am-form
+          hr.am-margin-bottom-xs
+          .row
+            .am-u-sm-12.am-margin-bottom-xs
+              stong.am-text-xs 用户状态:
+              span.am-text-xs  未绑定 &nbsp;
+              .am-btn.am-fr.am-btn-xs.am-btn-warning.am-btn-refresh 刷新
+          .row
+            .am-u-sm-12.am-margin-bottom-xs
+              stong.am-text-xs 订单状态:
+              span.am-text-xs  未绑定 &nbsp;
+          hr.am-margin-bottom-xs
+          .row.am-scrollable-horizontal
+            table.am-table.am-table-compact.am-table-striped.am-margin-bottom-xs.am-text-nowrap
+              tr
+                td
+                  .am-radio.am-margin-xs
+                    label
+                      input(type='radio',name='coupon',value='0')
+                      span.am-text-xs 韩浩
+              tr
+                td
+                  .am-radio.am-margin-xs
+                    label
+                      input(type='radio',name='coupon',value='0')
+                      span.am-text-xs 韩浩
+          hr.am-margin-bottom-xs.am-margin-top-xs
+          .row
+            .am-u-sm-12
+              .am-form-group
+                label.am-text-xs
+                  span.am-padding-right-sm 下单价格
+                  span 原价:
+                  span 100
+
+                input.am-input-sm(type='text',name='price')
+          .row
+            .am-u-sm-12.am-margin-bottom
+              .am-btn.am-btn-sm.am-btn-block.am-btn-success.am-btn-submit 提交
 
   .am-g
     if !data.length

@@ -65,6 +65,24 @@ var api = {
             });
         });
     },
+    _detail: function (wx_id) {
+        return new Promise(function (resolve, reject) {
+            User.findOne({wx_id: wx_id}, function (err, user) {
+                if (err)reject(err);
+                else {
+                    Order.findOne({wx_id: wx_id}, function (e, order) {
+                        if (e)reject(e);
+                        else {
+                            resolve({
+                                user: JSON.parse(JSON.stringify(user)),
+                                order: JSON.parse(JSON.stringify(order))
+                            })
+                        }
+                    });
+                }
+            })
+        });
+    },
     _refresh: function (wx_id) {
         return new Promise(function (resolve, reject) {
             request('http://172.105.232.134:12345/get_bind_status?' + qs({
@@ -88,20 +106,23 @@ var api = {
                         if (err)reject(err);
                         else if (Number(res.data.bind_cnt) != 4 && Number(res.data.valid) == 88) {
                             api._auth(wx_id).then(function () {
-                                User.findOne({wx_id: wx_id}, function (err, user) {
-                                    if (err)reject(err);
-                                    else resolve(user);
-                                })
+                                api._detail(wx_id).then(function (r) {
+                                    resolve(r);
+                                }, function (e) {
+                                    reject(e);
+                                });
                             }, function () {
-                                User.findOne({wx_id: wx_id}, function (err, user) {
-                                    if (err)reject(err);
-                                    else resolve(user);
+                                api._detail(wx_id).then(function (r) {
+                                    resolve(r);
+                                }, function (e) {
+                                    reject(e);
                                 })
                             })
                         } else {
-                            User.findOne({wx_id: wx_id}, function (err, user) {
-                                if (err)reject(err);
-                                else resolve(user);
+                            api._detail(wx_id).then(function (r) {
+                                resolve(r);
+                            }, function (e) {
+                                reject(e);
                             })
                         }
                     })
@@ -212,10 +233,10 @@ var api = {
                 if (err)reject(err);
                 else if (!order)reject(order);
                 else if (order.get('wx_id') && order.get('phone')) {
-                    api._refresh(order.get('wx_id')).then(function (user) {
-                        resolve(user);
-                    }, function (error) {
-                        reject(error);
+                    api._refresh(order.get('wx_id')).then(function (r) {
+                        resolve(r);
+                    }, function (e) {
+                        reject(e);
                     })
                 } else {
                     var passenger = order.get('passenger'),
@@ -230,8 +251,8 @@ var api = {
                     api._getUnBindUser().then(function (res) {
                         api._bindAll(res.get('wx_id'), names).then(function (r) {
                             Order.update({id: Number(order_id)}, {
-                                wx_id: r.get('wx_id'),
-                                phone: r.get('phone')
+                                wx_id: r.user.wx_id,
+                                phone: r.user.phone
                             }, {
                                 strict: false,
                                 upsert: true
