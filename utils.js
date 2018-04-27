@@ -15,13 +15,15 @@ var api = {
                     request('http://172.105.232.134:12345/new_get_wx?uid=' + uid, function (error, response, body) {
                         var res = JSON.parse(body.toString());
                         if (error || res.data.wx_id)reject(error);
-                        else {
+                        else if (res.data.wx_id) {
                             User.update({wx_id: res.data.wx_id},
                                 {bind: 0, wx_id: res.data.wx_id},
                                 {strict: false, upsert: true}, function (e, c) {
                                     if (e)reject(e);
                                     else resolve(c);
                                 });
+                        } else {
+                            reject(res.desc);
                         }
                     })
                 }
