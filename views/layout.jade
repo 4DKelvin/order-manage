@@ -50,7 +50,6 @@ html.no-js.fixed-layout
     // <![endif]
     script(src='http://cdn.amazeui.org/amazeui/2.6.2/js/amazeui.min.js')
     script(src='/javascripts/amazeui.datetimepicker.min.js')
-    script(src='http://amazeui.org/js/app.js')
     script(type='text/javascript').
       $('.datetime-picker').datetimepicker({
         format: 'yyyy-m-dd hh:ii'
@@ -63,7 +62,7 @@ html.no-js.fixed-layout
         }, function (r) {
           self.attr('disabled', false);
           if (r instanceof Object) {
-            $('#modal .am-modal-bd').html(JSON.stringify(r));
+            //$('#modal .am-modal-bd').html(JSON.stringify(r));
           } else {
             $('#modal .am-modal-bd').html(r);
           }

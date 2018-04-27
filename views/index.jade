@@ -13,13 +13,42 @@ block content
     .am-u-sm-12.am-u-md-4
 
   hr
+  .am-form
+    hr
+    .row
+      .am-u-sm-12.am-u-md-8
+        stong 当前状态:
+        span 未绑定
+      .am-u-sm-12.am-u-md-4
+        .am-btn.am-btn-xs.am-btn-default.am-btn-refresh 刷新
+    hr
+    .row
+      .am-u-sm-12.am-u-md-4
+        .am-radio
+          label
+            input(type='radio',name='coupon',value='0')
+            | 韩浩
+      .am-u-sm-12.am-u-md-4
+        .am-radio
+          label
+            input(type='radio',name='coupon',value='0')
+            | 韩浩
+    hr
+    .row
+      .am-u-sm-12
+        .am-form-group
+          label 下单价格
+          input(type='text',name='price')
+    .row
+      .am-u-sm-12
+        .am-btn.am-btn-xs.am-btn-default.am-btn-refresh 提交
+
   #modal.am-modal.am-modal-no-btn(tabindex='-1')
     .am-modal-dialog
       .am-modal-hd
         | 快速下单
         a.am-close.am-close-spin(href='javascript: void(0)', data-am-modal-close='') ×
       .am-modal-bd
-        | Modal 内容。本 Modal 无法通过遮罩层关闭。
 
   .am-g
     if !data.length
@@ -71,6 +100,6 @@ block content
                   br
                   span #{item.contactmob}
                 td
-                  a(class="am-btn am-btn-xs am-btn-default am-btn-order",order=item.id,href='javascript:void(0);') 下单
+                  a.am-btn.am-btn-xs.am-btn-default.am-btn-order(order=item.id,href='javascript:void(0);') 下单
 
 
