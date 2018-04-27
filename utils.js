@@ -244,6 +244,7 @@ var api = {
                             reject(e)
                         })
                     }, function (err) {
+                        console.log(err);
                         reject(err)
                     })
                 }
