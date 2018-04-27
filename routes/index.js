@@ -10,8 +10,7 @@ function getWxId() {
         Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
             if (err)reject(err);
             else if (res) {
-                console.log(res.value);
-                resolve(res);
+                resolve(res.get('value'));
             }
             else {
                 request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
@@ -19,7 +18,7 @@ function getWxId() {
                     else {
                         new Config({key: 'wx_id', value: body.data.wx_id}).save(function (e, c) {
                             if (e)reject(e);
-                            else resolve(c.value);
+                            else resolve(c.get('value'));
                         });
                     }
                 })
