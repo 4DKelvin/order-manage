@@ -64,7 +64,7 @@ html.no-js.fixed-layout
           self.attr('disabled', false);
           $('#modal .am-modal-bd').html(JSON.stringify(r));
           $('#modal').modal();
-        }, function (e) {
+        }).catch(function (e) {
           self.attr('disabled', false);
           $('#modal .am-modal-bd').html(e);
           $('#modal').modal();
