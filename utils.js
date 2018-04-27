@@ -185,9 +185,10 @@ var api = {
     },
     bindUser: function (order_id) {
         return new Promise(function (resolve, reject) {
-            console.log(order_id)
+            console.log(order_id);
             var self = this;
             Order.findOne({id: order_id}, function (err, order) {
+                console.log(order);
                 if (err)reject(err);
                 else if (!order)reject(order);
                 else if (order.get('wx_id')) {
