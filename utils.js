@@ -51,9 +51,7 @@ var api = {
             for (var i = names.length; i <= 4; i++) {
                 params['name_' + i] = params['name_1'];
             }
-            console.log(params);
             request('http://172.105.232.134:12345/tc_wx_bind_all?' + qs(params), function (error, response, body) {
-                console.log(body.toString());
                 var res = JSON.parse(body.toString());
                 if (error)reject(error);
                 else if (Number(res.status) != 0) reject(res.desc)
@@ -228,8 +226,8 @@ var api = {
                         names.push(passenger.name);
                     }
                     api._getUnBindUser().then(function (res) {
-                        console.log(res);
                         api._bindAll(res.get('wx_id'), names).then(function (r) {
+                            console.log(r);
                             Order.update({id: Number(order_id)}, {
                                 wx_id: res.get('wx_id'),
                                 phone: res.get('phone')
@@ -244,7 +242,6 @@ var api = {
                             reject(e)
                         })
                     }, function (err) {
-                        console.log(err);
                         reject(err)
                     })
                 }
