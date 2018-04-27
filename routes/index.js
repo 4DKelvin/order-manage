@@ -9,14 +9,12 @@ function getWxId() {
     return new Promise(function (resolve, reject) {
         Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
             if (err)reject(err);
-            else if (res) resolve(res);
+            else if (res) resolve(res.value);
             else {
                 request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
-                    console.log(body);
-                    if (error)reject(error);
+                    if (error || body.data.wx_id)reject(error);
                     else {
-                        res = JSON.parse(response.body);
-                        new Config({key: 'wx_id', value: res.data.wx_id}).save(function (e, c) {
+                        new Config({key: 'wx_id', value: body.data.wx_id}).save(function (e, c) {
                             if (e)reject(e);
                             else resolve(c.value);
                         });
