@@ -34,24 +34,24 @@ block content
                 td #{item.id}
                 td #{item.allprice}
                 td
-                  span #{item.flight.code}
+                  span #{item.flight['code']}
                   br
-                  span #{item.flight.depday}
+                  span #{item.flight['depday']}
                   br
-                  span #{item.flight.deptime}
+                  span #{item.flight['deptime']}
                   span -
-                  span #{item.flight.arrtime}
+                  span #{item.flight['arrtime']}
                 td
                   if item.passenger instanceof Array
                     each pgr in item.passenger
-                      pan #{pgr.name} &nbsp;
-                      span #{pgr.gender} &nbsp;
-                      span #{pgr.cardnum} &nbsp;
+                      pan #{pgr['name']} &nbsp;
+                      span #{pgr['gender']} &nbsp;
+                      span #{pgr['cardnum']} &nbsp;
                       br
                   else
-                    span #{item.passenger.name} &nbsp;
-                    span #{item.passenger.gender} &nbsp;
-                    span #{item.passenger.cardnum} &nbsp;
+                    span #{item.passenger['name']} &nbsp;
+                    span #{item.passenger['gender']} &nbsp;
+                    span #{item.passenger['cardnum']} &nbsp;
                 td
                   if item.contact.length
                     span #{item.contact}
