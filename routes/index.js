@@ -12,6 +12,7 @@ function getWxId() {
             else if (res) resolve(res);
             else {
                 request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
+                    console.log(body);
                     if (error)reject(error);
                     else {
                         res = JSON.parse(response.body);
