@@ -71,6 +71,7 @@ html.no-js.fixed-layout
             body.find('#order_password').html(r.user.pwd);
             body.find('#source_price').html(r.order.allprice);
             body.find('#items').html('');
+            body.find('.am-btn-submit').attr('disabled', !user_status);
             r.user.coupon.forEach(function (c) {
               var line = item.clone();
               line.find('.name').html(c.name);
