@@ -12,7 +12,7 @@ setInterval(function () {
         if (!error && response.statusCode == 200) {
             var res = xml2json.parser(body);
             console.log(res);
-            if (res.result.status != 'error') {
+            if (res.result && res.result.status != 'error') {
                 res.result.order.forEach(function (e) {
                     var order = {};
                     for (var key in e) {
