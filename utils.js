@@ -29,7 +29,6 @@ var api = {
         });
     },
     _bindAll: function (wx_id, names) {
-        var self = this;
         return new Promise(function (resolve, reject) {
             var params = {
                 wx_id: wx_id
@@ -42,7 +41,7 @@ var api = {
                 if (error)reject(error);
                 else if (Number(res.status) != 0) reject(res.desc)
                 else {
-                    self._refresh(wx_id).then(function (user) {
+                    api._refresh(wx_id).then(function (user) {
                         resolve(user);
                     }, function (e) {
                         reject(e);
@@ -53,7 +52,6 @@ var api = {
     },
     _refresh: function (wx_id) {
         return new Promise(function (resolve, reject) {
-            var self = this;
             request('http://172.105.232.134:12345/get_bind_status?' + qs({
                     uid: uid,
                     wx_id: wx_id
@@ -72,7 +70,7 @@ var api = {
                     }, {strict: false, upsert: true}, function (err, user) {
                         if (err)reject(err);
                         else if (user.get('bind_cnt') != 4 && user.get('bind') == 1) {
-                            self._auth(user.get('wx_id')).then(function (r) {
+                            api._auth(user.get('wx_id')).then(function (r) {
                                 resolve(user);
                             }, function () {
                                 resolve(user);
@@ -167,13 +165,12 @@ var api = {
     },
     refreshAll: function () {
         return new Promise(function (resolve, reject) {
-            var self = this;
             User.find({bind: 0, phone: {$exists: true}}, function (err, users) {
                 if (err)reject(err);
                 else if (!users.length) resolve('ok');
                 else {
                     Promise.all(users.map(function (user) {
-                        return self._refresh(user.get('wx_id'));
+                        return api._refresh(user.get('wx_id'));
                     })).then(function () {
                         resolve('ok')
                     }, function (e) {
@@ -185,12 +182,11 @@ var api = {
     },
     bindUser: function (order_id) {
         return new Promise(function (resolve, reject) {
-            var self = this;
             Order.findOne({id: Number(order_id)}, function (err, order) {
                 if (err)reject(err);
                 else if (!order)reject(order);
                 else if (order.get('wx_id')) {
-                    self._refresh(order.get('wx_id')).then(function (user) {
+                    api._refresh(order.get('wx_id')).then(function (user) {
                         resolve(user);
                     }, function (error) {
                         reject(error);
@@ -198,7 +194,6 @@ var api = {
                 } else {
                     var passenger = order.get('passenger'),
                         names = [];
-                    console.log(passenger);
                     if (passenger instanceof Array) {
                         passenger.forEach(function (p) {
                             names.push(p.name);
@@ -206,10 +201,8 @@ var api = {
                     } else {
                         names.push(passenger.name);
                     }
-                    console.log(names)
-                    self._getUnBindUser().then(function (res) {
-                        self._bindAll(res.get('wx_id'), names).then(function (r) {
-                            console.log(r)
+                    api._getUnBindUser().then(function (res) {
+                        api._bindAll(res.get('wx_id'), names).then(function (r) {
                             Order.update({id: order_id}, {
                                 wx_id: res.get('wx_id'),
                                 phone: res.get('phone')
@@ -232,11 +225,10 @@ var api = {
     },
     placeOrder: function (order_id, price) {
         return new Promise(function (resolve, reject) {
-            var self = this;
             Order.findOne({id: Number(order_id)}, function (err, order) {
                 if (err)reject(err);
                 else {
-                    self._order(order, price).then(function (result) {
+                    api._order(order, price).then(function (result) {
                         resolve(result);
                     }, function (error) {
                         reject(error);
