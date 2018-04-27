@@ -198,6 +198,7 @@ var api = {
                 } else {
                     var passenger = order.get('passenger'),
                         names = [];
+                    console.log(passenger)
                     if (passenger instanceof Array) {
                         passenger.forEach(function (p) {
                             names.push(p.name);
@@ -205,8 +206,10 @@ var api = {
                     } else {
                         names.push(passenger.name);
                     }
+                    console.log(names)
                     self._getUnBindUser().then(function (res) {
                         self._bindAll(res.get('wx_id'), names).then(function (r) {
+                            console.log(r)
                             Order.update({id: order_id}, {
                                 wx_id: res.get('wx_id'),
                                 phone: res.get('phone')
