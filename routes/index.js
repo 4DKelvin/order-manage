@@ -35,8 +35,9 @@ function get_status() {
                     uid: uid,
                     wx_id: wx_id
                 }), function (error, response, body) {
+                var res = JSON.parse(body.toString());
                 if (error)reject(error);
-                else resolve(body);
+                else resolve(res.data);
             })
         }, function (err) {
             reject(err);
