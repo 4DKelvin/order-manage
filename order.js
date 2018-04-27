@@ -11,7 +11,6 @@ setInterval(function () {
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var res = xml2json.parser(body);
-            console.log(res);
             if (res.result && res.result.status != 'error') {
                 res.result.order.forEach(function (e) {
                     var order = {};
@@ -23,4 +22,4 @@ setInterval(function () {
             }
         }
     });
-}, 1000);
+}, 30000);
