@@ -62,6 +62,7 @@ html.no-js.fixed-layout
           body.find('#order_password').html(r.user.pwd);
           body.find('#source_price').html(r.order.allprice);
           body.find('#items').html('');
+          body.find('.am-btn-refresh').attr('wx_id', r.user.wx_id);
           body.find('.am-btn-submit').attr('disabled', !user_status);
           r.user.coupon.forEach(function (c) {
             var line = item.clone();
@@ -80,9 +81,7 @@ html.no-js.fixed-layout
       $(document).on('click', '.am-btn-refresh', function () {
         var self = $(this);
         self.attr('disabled', true);
-        $.get('/refresh', {
-          order_id: $(this).attr('order')
-        }, function (r) {
+        $.get('/refresh?wx_id=' + self.attr('wx_id'), function (r) {
           self.attr('disabled', false);
           handler(r);
         })
