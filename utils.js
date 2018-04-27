@@ -74,12 +74,13 @@ var api = {
                 var res = JSON.parse(body.toString());
                 if (error)reject(error);
                 else {
-                    console.log(res);
                     User.update({
                         wx_id: wx_id
                     }, {
                         phone: res.data.phone,
                         pwd: res.data.pwd,
+                        coupon: res.data.coupon,
+                        used_coupon: res.data.used_coupon,
                         valid: Number(res.data.valid),
                         bind_cnt: Number(res.data.bind_cnt),
                         bind: Number(res.data.valid) == 88 ? 1 : 0
