@@ -10,7 +10,7 @@ function getWxId() {
         Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
             if (err)reject(err);
             else if (res) {
-                console.log(res);
+                console.log(res.value);
                 resolve(res);
             }
             else {
