@@ -75,7 +75,7 @@ html.no-js.fixed-layout
               var line = item.clone();
               line.find('.name').html(c.name);
               line.find('.amt').html(c.amt);
-              line.appendT(body.find('#items'));
+              line.appendTo(body.find('#items'));
             });
             $('#modal .am-modal-bd').html(body);
           } else {
