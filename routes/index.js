@@ -40,16 +40,16 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.get('/bind', function (req, res, next) {
-    utils.bindUser(req.query.order_id).then(function (r) {
+router.post('/bind', function (req, res, next) {
+    utils.bindUser(req.body.order_id).then(function (r) {
         res.json(r);
     }, function (e) {
         res.json(e);
     })
 });
 
-router.get('/order', function (req, res, next) {
-    utils.placeOrder(req.query.order_id, req.query.price).then(function (r) {
+router.post('/order', function (req, res, next) {
+    utils.placeOrder(req.body.order_id, req.body.price).then(function (r) {
         res.json(r);
     }, function (e) {
         res.json(e);
