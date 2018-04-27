@@ -13,6 +13,14 @@ block content
     .am-u-sm-12.am-u-md-4
 
   hr
+  #modal.am-modal.am-modal-no-btn(tabindex='-1')
+    .am-modal-dialog
+      .am-modal-hd
+        | 快速下单
+        a.am-close.am-close-spin(href='javascript: void(0)', data-am-modal-close='') ×
+      .am-modal-bd
+        | Modal 内容。本 Modal 无法通过遮罩层关闭。
+
   .am-g
     if !data.length
       .am-u-sm-12
@@ -22,10 +30,10 @@ block content
         table.am-table.am-table-bd.am-table-striped.admin-content-table.am-text-nowrap
           thead
             tr
-              th ID
+              th.am-hide-md ID
               th 金额
               th 航班
-              th 乘客
+              th.am-hide-md 乘客
               th 联系人
               th 管理
           tbody
@@ -66,6 +74,6 @@ block content
                   br
                   span #{item.status}
                 td
-                  a(class="am-btn am-btn-xs am-btn-default am-btn-order",order=item.id,href='javascript:void(0);') 一键下单
+                  a(data-am-modal="{target: '#model'}", class="am-btn am-btn-xs am-btn-default am-btn-order",order=item.id,href='javascript:void(0);') 一键下单
 
 
