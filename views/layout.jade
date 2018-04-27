@@ -52,8 +52,40 @@ html.no-js.fixed-layout
     script(src='/javascripts/amazeui.datetimepicker.min.js')
     script(type='text/javascript').
       var temp = $('#modal .am-modal-bd .am-form').clone();
+      var handler = function (r) {
+        if (r instanceof Object) {
+          var body = temp.clone();
+          var item = temp.find('#items .item').clone();
+          var user_status = Number(r.user.valid) == 88 && Number(r.user.bind_cnt) == 4;
+          body.find('#user_status').html(user_status ? '已绑定' : '未绑定');
+          body.find('#order_phone').html(r.user.phone);
+          body.find('#order_password').html(r.user.pwd);
+          body.find('#source_price').html(r.order.allprice);
+          body.find('#items').html('');
+          body.find('.am-btn-submit').attr('disabled', !user_status);
+          r.user.coupon.forEach(function (c) {
+            var line = item.clone();
+            line.find('.name').html(c.name);
+            line.find('.amt').html(c.amt);
+            line.appendTo(body.find('#items'));
+          });
+          $('#modal .am-modal-bd').html(body);
+        } else {
+          $('#modal .am-modal-bd').html(r);
+        }
+      }
       $('.datetime-picker').datetimepicker({
         format: 'yyyy-m-dd hh:ii'
+      });
+      $('.am-btn-refresh').on('click', function () {
+        var self = $(this);
+        self.attr('disabled', true);
+        $.get('/refresh', {
+          order_id: $(this).attr('order')
+        }, function (r) {
+          self.attr('disabled', false);
+          handler(r);
+        })
       });
       $('.am-btn-order').on('click', function () {
         var self = $(this);
@@ -62,26 +94,7 @@ html.no-js.fixed-layout
           order_id: $(this).attr('order')
         }, function (r) {
           self.attr('disabled', false);
-          if (r instanceof Object) {
-            var body = temp.clone();
-            var item = temp.find('#items .item').clone();
-            var user_status = Number(r.user.valid) == 88 && Number(r.user.bind_cnt) == 4;
-            body.find('#user_status').html(user_status ? '已绑定' : '未绑定');
-            body.find('#order_phone').html(r.user.phone);
-            body.find('#order_password').html(r.user.pwd);
-            body.find('#source_price').html(r.order.allprice);
-            body.find('#items').html('');
-            body.find('.am-btn-submit').attr('disabled', !user_status);
-            r.user.coupon.forEach(function (c) {
-              var line = item.clone();
-              line.find('.name').html(c.name);
-              line.find('.amt').html(c.amt);
-              line.appendTo(body.find('#items'));
-            });
-            $('#modal .am-modal-bd').html(body);
-          } else {
-            $('#modal .am-modal-bd').html(r);
-          }
+          handler(r);
           $('#modal').modal();
         });
       });
