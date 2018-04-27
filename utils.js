@@ -18,9 +18,14 @@ var api = {
                         else if (res.data.wx_id) {
                             User.update({wx_id: res.data.wx_id},
                                 {bind: 0, wx_id: res.data.wx_id},
-                                {strict: false, upsert: true}, function (e, c) {
+                                {strict: false, upsert: true}, function (e, raw) {
                                     if (e)reject(e);
-                                    else resolve(c);
+                                    else {
+                                        User.findOne({wx_id: res.data.wx_id}, function (err, user) {
+                                            if (err)reject(err);
+                                            else resolve(user);
+                                        })
+                                    }
                                 });
                         } else {
                             reject(res.desc);
@@ -80,12 +85,15 @@ var api = {
                         valid: Number(res.data.valid),
                         bind_cnt: Number(res.data.bind_cnt),
                         bind: Number(res.data.valid) == 88 ? 1 : 0
-                    }, {strict: false, upsert: true}, function (err, user) {
+                    }, {strict: false, upsert: true}, function (err, raw) {
                         console.log(user);
                         if (err)reject(err);
-                        else if (user.get('bind_cnt') != 4 && user.get('bind') == 1) {
-                            api._auth(user.get('wx_id')).then(function (r) {
-                                resolve(user);
+                        else if (Number(res.data.bind_cnt) != 4 && Number(res.data.valid) == 88) {
+                            api._auth(wx_id).then(function () {
+                                User.findOne({wx_id: wx_id}, function (err, user) {
+                                    if (err)reject(err);
+                                    else resolve(user);
+                                })
                             }, function () {
                                 resolve(user);
                             })
@@ -126,9 +134,9 @@ var api = {
                         Order.update({id: order.get('id')}, {upload: 'success'}, {
                             strict: false,
                             upsert: true
-                        }, function (e, o) {
+                        }, function (e, raw) {
                             if (e)reject(e);
-                            else resolve(o);
+                            else resolve(order);
                         });
                         resolve(res.desc);
                     } else {
@@ -160,17 +168,17 @@ var api = {
                         Order.update({id: order.id}, {upload: 'success'}, {
                             strict: false,
                             upsert: true
-                        }, function (e, o) {
+                        }, function (e, raw) {
                             if (e)reject(e);
-                            else resolve(o);
+                            else resolve(order);
                         });
                     } else {
                         Order.update({id: order.id}, {upload: 'failure'}, {
                             strict: false,
                             upsert: true
-                        }, function (e, o) {
+                        }, function (e, raw) {
                             if (e)reject(e);
-                            else resolve(o);
+                            else resolve(order);
                         });
                     }
                 })
@@ -224,7 +232,7 @@ var api = {
                             }, {
                                 strict: false,
                                 upsert: true
-                            }, function (e, o) {
+                            }, function (e, raw) {
                                 if (e)reject(e);
                                 else resolve(r);
                             });
