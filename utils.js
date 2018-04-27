@@ -76,7 +76,6 @@ var api = {
                 var res = JSON.parse(body.toString());
                 if (error)reject(error);
                 else {
-                    console.log(wx_id);
                     User.update({
                         wx_id: wx_id
                     }, {
@@ -94,10 +93,16 @@ var api = {
                                     else resolve(user);
                                 })
                             }, function () {
-                                resolve(user);
+                                User.findOne({wx_id: wx_id}, function (err, user) {
+                                    if (err)reject(err);
+                                    else resolve(user);
+                                })
                             })
                         } else {
-                            resolve(user);
+                            User.findOne({wx_id: wx_id}, function (err, user) {
+                                if (err)reject(err);
+                                else resolve(user);
+                            })
                         }
                     })
                 }
