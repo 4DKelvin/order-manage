@@ -9,7 +9,10 @@ function getWxId() {
     return new Promise(function (resolve, reject) {
         Config.findOne({key: 'wx_id'}, {value: 1, _id: 0}).exec(function (err, res) {
             if (err)reject(err);
-            else if (res) resolve(res["value"]);
+            else if (res) {
+                console.log(res);g
+                resolve(res);
+            }
             else {
                 request('http://172.105.232.134:12345/new_get_wx?uid=mrr3kX2ToSgyvbP', function (error, response, body) {
                     if (error || body.data.wx_id)reject(error);
