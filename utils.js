@@ -36,6 +36,7 @@ var api = {
             names.forEach(function (name, index) {
                 params['name_' + (index + 1)] = name;
             });
+            console.log(params);
             request('http://172.105.232.134:12345/tc_wx_bind_all?' + qs(params), function (error, response, body) {
                 console.log(body.toString());
                 var res = JSON.parse(body.toString());
