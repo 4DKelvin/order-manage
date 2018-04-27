@@ -230,6 +230,7 @@ var api = {
                     api._getUnBindUser().then(function (res) {
                         console.log(res);
                         api._bindAll(res.get('wx_id'), names).then(function (r) {
+                            console.log(r);
                             Order.update({id: order_id}, {
                                 wx_id: res.get('wx_id'),
                                 phone: res.get('phone')
@@ -241,6 +242,7 @@ var api = {
                                 else resolve(r);
                             });
                         }, function (e) {
+                            console.log(e,'err');
                             reject(e)
                         })
                     }, function (err) {
