@@ -37,6 +37,7 @@ var api = {
                 params['name_' + (index + 1)] = name;
             });
             request('http://172.105.232.134:12345/tc_wx_bind_all?' + qs(params), function (error, response, body) {
+                console.log(body.toString());
                 var res = JSON.parse(body.toString());
                 if (error)reject(error);
                 else if (Number(res.status) != 0) reject(res.desc)
