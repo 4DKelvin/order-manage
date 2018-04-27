@@ -62,11 +62,11 @@ html.no-js.fixed-layout
           order_id: $(this).attr('order')
         }, function (r) {
           self.attr('disabled', false);
-          $('#modal .am-modal-bd').html(JSON.stringify(r));
-          $('#modal').modal();
-        }).catch(function (e) {
-          self.attr('disabled', false);
-          $('#modal .am-modal-bd').html(e);
+          if (r instanceof Object) {
+            $('#modal .am-modal-bd').html(JSON.stringify(r));
+          } else {
+            $('#modal .am-modal-bd').html(r);
+          }
           $('#modal').modal();
         });
       });
