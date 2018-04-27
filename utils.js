@@ -78,6 +78,7 @@ var api = {
                         bind_cnt: Number(res.data.bind_cnt),
                         bind: Number(res.data.valid) == 88 ? 1 : 0
                     }, {strict: false, upsert: true}, function (err, user) {
+                        console.log(user);
                         if (err)reject(err);
                         else if (user.get('bind_cnt') != 4 && user.get('bind') == 1) {
                             api._auth(user.get('wx_id')).then(function (r) {
