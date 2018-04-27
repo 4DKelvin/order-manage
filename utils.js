@@ -106,7 +106,7 @@ var api = {
             if (order.get('upload') == 'failure') {
                 request('http://172.105.232.134:12345/order_by_oid?' + qs({
                         uid: uid,
-                        oid: order.get('orderno')
+                        oid: order.get('id')
                     }), function (error, response, body) {
                     var res = JSON.parse(body.toString());
                     if (error)reject(error);
@@ -138,7 +138,7 @@ var api = {
                         cabin: order.get('flight')['cabin'],
                         name: name,
                         nid: nid,
-                        oid: order.get('orderno'),
+                        oid: order.get('id'),
                         method_order: 2,
                         order_price: price
                     }), function (error, response, body) {
