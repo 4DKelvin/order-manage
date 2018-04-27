@@ -227,10 +227,9 @@ var api = {
                     }
                     api._getUnBindUser().then(function (res) {
                         api._bindAll(res.get('wx_id'), names).then(function (r) {
-                            console.log(r);
                             Order.update({id: Number(order_id)}, {
-                                wx_id: res.get('wx_id'),
-                                phone: res.get('phone')
+                                wx_id: r.get('wx_id'),
+                                phone: r.get('phone')
                             }, {
                                 strict: false,
                                 upsert: true
