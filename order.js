@@ -1,10 +1,12 @@
 const request = require('request');
 const Order = require('./db').Order;
 const xml2json = require('node-xml2json');
-setInterval(function () {
+//setInterval(function () {
     var date = [new Date().getFullYear(), new Date().getMonth() + 1, new Date().getDate()].join('-'),
         start_time = date + [new Date().getHours(), new Date().getMinutes(), '00'].join(':'),
         end_time = date + [new Date().getHours(), new Date().getMinutes(), '00'].join(':');
+    start_time = '2018-4-1 00:00:00';
+    end_time = '2018-4-1 23:59:59';
     request.post({
         url: 'http://fuwu.jiulvxing.com/autoOta/orderExport?domain=yfh&user=17373761393&pass=741852&type=incr&start=' +
         start_time + '&end=' + end_time
@@ -17,9 +19,11 @@ setInterval(function () {
                     for (var key in e) {
                         order[key] = e[key];
                     }
-                    new Order(order).save();
+                    Order.update({id: order.id}, order, {upsert: true}, function () {
+
+                    });
                 })
             }
         }
     });
-}, 30000);
+//}, 30000);
