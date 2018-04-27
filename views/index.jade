@@ -14,12 +14,9 @@ block content
 
   hr
   .am-g
-    if !data
+    if !data.length
       .am-u-sm-12
         .am-alert.am-alert-success no orders found.
-    else if data.status == 'error'
-      .am-u-sm-12
-        .am-alert.am-alert-warning #{data.msg.content}
     else
       .am-u-sm-12
         table.am-table.am-table-bd.am-table-striped.admin-content-table
@@ -32,7 +29,7 @@ block content
               th 联系人
               th 管理
           tbody
-            each item in data.order
+            each item in data
               tr
                 td #{item.id}
                 td #{item.allprice}
@@ -66,17 +63,6 @@ block content
                   br
                   span #{item.status}
                 td
-                  a(class="am-btn am-btn-xs am-btn-primary am-btn-order",href='javascript:void(0);') 一键下单
-                  input(type='hidden',name="wx_id",value=params.wx_id)
-                  input(type='hidden',name="phone",value=params.phone)
-                  input(type='hidden',name="dep",value=item.flight.dep)
-                  input(type='hidden',name="arr",value=item.flight.arr)
-                  input(type='hidden',name="flight_no",value=item.flight.code)
-                  input(type='hidden',name="date",value=item.flight.depday)
-                  input(type='hidden',name="cabin",value=item.flight.cabin)
-                  input(type='hidden',name="passengers",value=JSON.stringify(item.passenger))
-                  input(type='hidden',name="method_order",value=2)
-                  input(type='hidden',name="order_price",value=item.allprice)
-                  input(type='hidden',name="oid",value=item.id)
+                  a(class="am-btn am-btn-xs am-btn-primary am-btn-order",order=item.id,href='javascript:void(0);') 一键下单
 
 

@@ -16,10 +16,12 @@ var api = {
                         var res = JSON.parse(body.toString());
                         if (error || res.data.wx_id)reject(error);
                         else {
-                            new User({bind: 0, wx_id: res.data.wx_id}).save(function (e, c) {
-                                if (e)reject(e);
-                                else resolve(c);
-                            });
+                            User.update({wx_id: res.data.wx_id},
+                                {bind: 0, wx_id: res.data.wx_id},
+                                {strict: false, upsert: true}, function (e, c) {
+                                    if (e)reject(e);
+                                    else resolve(c);
+                                });
                         }
                     })
                 }
@@ -27,6 +29,27 @@ var api = {
         });
     },
     _bindAll: function (wx_id, names) {
+        var self = this;
+        return new Promise(function (resolve, reject) {
+            var params = {
+                wx_id: wx_id
+            };
+            names.forEach(function (name, index) {
+                params['name_' + (index + 1)] = name;
+            });
+            request('http://172.105.232.134:12345/tc_wx_bind_all?' + qs(params), function (error, response, body) {
+                var res = JSON.parse(body.toString());
+                if (error)reject(error);
+                else if (Number(res.status) != 0) reject(res.desc)
+                else {
+                    self._refresh(wx_id).then(function (user) {
+                        resolve(user);
+                    }, function (e) {
+                        reject(e);
+                    });
+                }
+            });
+        });
     },
     _refresh: function (wx_id) {
         return new Promise(function (resolve, reject) {
@@ -46,7 +69,7 @@ var api = {
                         valid: Number(res.data.valid),
                         bind_cnt: Number(res.data.bind_cnt),
                         bind: Number(res.data.valid) == 88 ? 1 : 0
-                    }, function (err, user) {
+                    }, {strict: false, upsert: true}, function (err, user) {
                         if (err)reject(err);
                         else if (user.get('bind_cnt') != 4 && user.get('bind') == 1) {
                             self._auth(user.get('wx_id')).then(function (r) {
@@ -78,6 +101,70 @@ var api = {
             })
         });
     },
+    _order: function (order, price) {
+        return new Promise(function (resolve, reject) {
+            if (order.get('upload') == 'failure') {
+                request('http://172.105.232.134:12345/order_by_oid?' + qs({
+                        uid: uid,
+                        oid: order.get('orderno')
+                    }), function (error, response, body) {
+                    var res = JSON.parse(body.toString());
+                    if (error)reject(error);
+                    else if (Number(res.status) == 0) {
+                        Order.update({id: order.get('id')}, {upload: 'success'}, {
+                            strict: false,
+                            upsert: true
+                        }, function (e, o) {
+                            if (e)reject(e);
+                            else resolve(o);
+                        });
+                        resolve(res.desc);
+                    } else {
+                        reject(res.desc);
+                    }
+                })
+            } else if (order.get('wx_id') && order.get('phone')) {
+                var passenger = order.get('passenger'),
+                    name = passenger instanceof Array ? passenger[0]['name'] : passenger['name'],
+                    nid = passenger instanceof Array ? passenger[0]['cardnum'] : passenger['cardnum'];
+                request('http://172.105.232.134:12345/upload_order?' + qs({
+                        uid: uid,
+                        wx_id: order.get('wx_id'),
+                        phone: order.get('phone'),
+                        dep: order.get('flight')['dep'],
+                        arr: order.get('flight')['arr'],
+                        flight_no: order.get('flight')['code'],
+                        date: order.get('flight')['depday'],
+                        cabin: order.get('flight')['cabin'],
+                        name: name,
+                        nid: nid,
+                        oid: order.get('orderno'),
+                        method_order: 2,
+                        order_price: price
+                    }), function (error, response, body) {
+                    var res = JSON.parse(body.toString());
+                    if (error)reject(error);
+                    else if (Number(res.status) == 0) {
+                        Order.update({id: order.id}, {upload: 'success'}, {
+                            strict: false,
+                            upsert: true
+                        }, function (e, o) {
+                            if (e)reject(e);
+                            else resolve(o);
+                        });
+                    } else {
+                        Order.update({id: order.id}, {upload: 'failure'}, {
+                            strict: false,
+                            upsert: true
+                        }, function (e, o) {
+                            if (e)reject(e);
+                            else resolve(o);
+                        });
+                    }
+                })
+            }
+        });
+    },
     refreshAll: function () {
         return new Promise(function (resolve, reject) {
             var self = this;
@@ -96,17 +183,72 @@ var api = {
             })
         });
     },
-    bindUser: function (names) {
+    bindUser: function (order_id) {
         return new Promise(function (resolve, reject) {
             var self = this;
-            self._getUnBindUser().then(function (res) {
-                self._bindAll(res.get('wx_id'), names).then(function (r) {
-                    resolve(r)
-                }, function (e) {
-                    reject(e)
-                })
-            }, function (err) {
-                reject(err)
+            Order.findOne({id: order_id}, function (err, order) {
+                if (err)reject(err);
+                else if (!order)reject(order);
+                else if (order.get('wx_id')) {
+                    self._refresh(order.get('wx_id')).then(function (user) {
+                        resolve(user);
+                    }, function (error) {
+                        reject(error);
+                    })
+                } else {
+                    var passenger = order.get('passenger'),
+                        names = [];
+                    if (passenger instanceof Array) {
+                        passenger.forEach(function (p) {
+                            names.push(p.name);
+                        });
+                    } else {
+                        names.push(passenger.name);
+                    }
+                    self._getUnBindUser().then(function (res) {
+                        self._bindAll(res.get('wx_id'), names).then(function (r) {
+                            Order.update({id: order_id}, {
+                                wx_id: res.get('wx_id'),
+                                phone: res.get('phone')
+                            }, {
+                                strict: false,
+                                upsert: true
+                            }, function (e, o) {
+                                if (e)reject(e);
+                                else resolve(r);
+                            });
+                        }, function (e) {
+                            reject(e)
+                        })
+                    }, function (err) {
+                        reject(err)
+                    })
+                }
+            });
+        });
+    },
+    placeOrder: function (order_id, price) {
+        return new Promise(function (resolve, reject) {
+            var self = this;
+            Order.findOne({id: order_id}, function (err, order) {
+                if (err)reject(err);
+                else {
+                    self._order(order, price).then(function (result) {
+                        resolve(result);
+                    }, function (error) {
+                        reject(error);
+                    })
+                }
+            });
+        });
+    },
+    orders: function (start, end, page) {
+        return new Promise(function (resolve, reject) {
+            Order.find({
+                createtime: {$gte: start, $lte: end}
+            }).skip(page * 10).limit(10).exec(function (err, orders) {
+                if (err)reject(err);
+                else resolve(orders);
             })
         });
     }
