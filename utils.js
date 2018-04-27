@@ -78,11 +78,12 @@ var api = {
             })
         });
     },
-    _refreshAll: function () {
+    refreshAll: function () {
         return new Promise(function (resolve, reject) {
             var self = this;
             User.find({bind: 0, phone: {$exists: true}}, function (err, users) {
                 if (err)reject(err);
+                else if (!users.length) resolve('ok');
                 else {
                     Promise.all(users.map(function (user) {
                         return self._refresh(user.get('wx_id'));
@@ -112,20 +113,3 @@ var api = {
 };
 
 module.exports = api;
-
-function get_status() {
-    return new Promise(function (resolve, reject) {
-        get_wxid().then(function (wx_id) {
-            request('http://172.105.232.134:12345/get_bind_status?' + qs({
-                    uid: uid,
-                    wx_id: wx_id
-                }), function (error, response, body) {
-                var res = JSON.parse(body.toString());
-                if (error)reject(error);
-                else resolve(res.data);
-            })
-        }, function (err) {
-            reject(err);
-        })
-    });
-}
