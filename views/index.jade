@@ -31,7 +31,10 @@ block content
           tbody
             each item in data
               tr
-                td #{item.id}
+                td
+                  span #{item.id}
+                  br
+                  span #{item.createtime}
                 td #{item.allprice}
                 td
                   span #{item.flight['code']}
