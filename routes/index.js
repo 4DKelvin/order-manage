@@ -15,8 +15,8 @@ const format = function (date) {
 /* GET home page. */
 router.get('/', function (req, res, next) {
     var d = new Date(),
-        start = [d.getFullYear() + n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 00:00:00',
-        end = [d.getFullYear() + n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 23:59:59';
+        start = [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 00:00:00',
+        end = [d.getFullYear(),g n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 23:59:59';
     utils.orders(format(req.query.start || start), format(req.query.end || end), req.query.page || 0).then(function (r) {
         res.render('index', {
             title: '订单管理',
