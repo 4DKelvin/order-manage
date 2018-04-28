@@ -110,7 +110,7 @@ block content
                 td
                   a.am-btn.am-btn-xs.am-btn-default.am-btn-order(order=item.id,href='javascript:void(0);') 下单
        .row
-         .am-u-sm-12.am-margin-bottom.am-fr
+         .am-u-sm-12.am-margin-bottom.am-text-right
            a.am-btn.am-btn-xs.am-btn-success.am-margin-right(href='/?start=' + params.start + '&end=' + params.end + '&page=' + (Number(params.page) - 1 >= 0 ? Number(params.page) - 1 : 0)) 上一页
            span.am-btn.am-btn-xs.am-btn-default.am-margin-right 第 #{Number(params.page) + 1} 页
            a.am-btn.am-btn-xs.am-btn-success(href='/?start=' + params.start + '&end=' + params.end + '&page=' + (Number(params.page) + 1)) 下一页
