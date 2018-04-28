@@ -24,7 +24,7 @@ router.get('/', function (req, res, next) {
             params: {
                 start: format(req.query.start || start),
                 end: format(req.query.end || end),
-                page: req.query.page
+                page: req.query.page || 0
             }
         });
     }, function () {
@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
             params: {
                 start: format(req.query.start || start),
                 end: format(req.query.end || end),
-                page: req.query.page
+                page: req.query.page || 0
             }
         });
     });
