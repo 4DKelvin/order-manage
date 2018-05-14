@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
             params: {
                 start: format(req.query.start || start),
                 end: format(req.query.end || end),
-                keyword:keyword,
+                keyword:keyword || '',
                 page: req.query.page || 0
             }
         });
@@ -36,7 +36,7 @@ router.get('/', function (req, res, next) {
             params: {
                 start: format(req.query.start || start),
                 end: format(req.query.end || end),
-                keyword:keyword,
+                keyword:keyword || '',
                 page: req.query.page || 0
             }
         });
