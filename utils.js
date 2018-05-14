@@ -284,9 +284,17 @@ var api = {
             });
         });
     },
-    orders: function (start, end, page) {
+    orders: function (start, end, page, keyword) {
         return new Promise(function (resolve, reject) {
             Order.find({
+                $or: [
+                    {contact: {$regex: keyword}},
+                    {orderno: {$regex: keyword}},
+                    {id: {$regex: keyword}},
+                    {contactmob: {$regex: keyword}},
+                    {"passenger.name": {$regex: keyword}},
+                    {"passenger.cardnum": {$regex: keyword}}
+                ],
                 createtime: {$gte: start, $lte: end}
             }).skip(page * 10).limit(10).exec(function (err, orders) {
                 if (err)reject(err);
