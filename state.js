@@ -9,10 +9,10 @@ api._state('CTU', 'SZX', '2018-05-28').then(function(r) {
                 items.forEach(function(e) {
                     var values = e.split(','),
                         spaces = [];
-                    (values[7] || '').replace(/(\S\S)/g, function(e) {
-                        spaces.push(e);
-                    });
-                    if (values.length) {
+                    if (values.length >= 7) {
+                        (values[7] || '').replace(/(\S\S)/g, function(e) {
+                            spaces.push(e);
+                        });
                         res_data.push({
                             date: values[0],
                             dep_time: values[1],
