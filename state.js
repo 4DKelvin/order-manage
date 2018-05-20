@@ -8,7 +8,7 @@ api._state('CTU', 'SZX', '2018-05-28').then(function(r) {
                 res_data = items.map(function(e) {
                     var values = e.split(','),
                         spaces = [];
-                    values[7].replace(/(\S\S)/g, function(e) {
+                    (values[7] || '').replace(/(\S\S)/g, function(e) {
                         spaces.push(e);
                     });
                     return {
