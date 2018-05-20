@@ -27,6 +27,22 @@ html.no-js.fixed-layout
         strong 后台管理 &nbsp;
         small 业务系统
     .am-cf.admin-main
+      #admin-offcanvas.admin-sidebar.am-offcanvas
+        .am-offcanvas-bar.admin-offcanvas-bar
+          ul.am-list.admin-sidebar-list
+            li
+              a(href='/')
+                span.am-icon-home
+                |  订单管理
+            li
+              a(href='/toggle')
+                span.am-icon-puzzle-piece
+                |  仓位警告
+            li
+              a(href='/settings')
+                span.am-icon-setting
+                |  设置
+
       // content start
       .admin-content
         .admin-content-body

@@ -4,5 +4,6 @@ mongoose.connect('mongodb://localhost/orders');
 
 module.exports = {
     Order: mongoose.model('Order', schema),
-    User: mongoose.model('User', schema)
+    User: mongoose.model('User', schema),
+    Space: mongoose.model('Space', schema)
 };
