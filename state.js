@@ -7,20 +7,23 @@ api._state('CTU', 'SZX', '2018-05-28').then(function(r) {
                     items = data.split(',E#'),
                     res_data = [];
                 items.forEach(function(e) {
-                    var values = e.split(','),
-                        spaces = [];
+                    var values = e.split(',');
                     if (values.length >= 7) {
                         (values[7] || '').replace(/(\S\S)/g, function(e) {
-                            spaces.push(e);
-                        });
-                        res_data.push({
-                            date: values[0],
-                            dep_time: values[1],
-                            arr_time: values[2],
-                            flight_no: values[3] + values[4],
-                            dep_city: values[5],
-                            arr_city: values[6],
-                            spaces: spaces
+                            var val = e.replace(/([a-zA-Z])([0-9])/g, '$1 $2');
+                            if (val.indexOf(' ') >= 0) {
+                                var spaces = {};
+                                spaces[val[0]] = val[1];
+                                res_data.push({
+                                    date: values[0],
+                                    dep_time: values[1],
+                                    arr_time: values[2],
+                                    flight_no: values[3] + values[4],
+                                    dep_city: values[5],
+                                    arr_city: values[6],
+                                    spaces: spaces
+                                });
+                            }
                         });
                     }
                     console.dir(res_data);
