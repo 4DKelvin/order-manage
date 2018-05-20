@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  form.am-g(action='/',method='get')
+    .am-u-sm-12.am-u-md-3
+      input.am-form-field(type='text', name='dep', value=params.dep, placeholder='出发城市')
+    .am-u-sm-12.am-u-md-3
+      input.am-form-field(type='text', name='arr',value=params.arr, placeholder='到达城市')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='date', value=params.date, placeholder='查询日期', class='date-picker')
+    .am-u-sm-12.am-u-md-2
+      .am-input-group.am-input-group
+        span.am-input-group-btn
+          button.am-btn.am-btn-default(type='submit') 搜索
+  hr
+  .am-g
+    if !data.length
+      .am-u-sm-12
+        .am-alert.am-alert-success 没有任何记录.
+    else
+      .am-u-sm-12.am-scrollable-horizontal
+        table.am-table.am-table-bd.am-table-striped.admin-content-table.am-text-nowrap
+          thead
+            tr
+              th 航班号码
+              th 起飞城市
+              th 起飞时间
+              th 到达城市
+              th 到达时间
+              th 仓位类型
+              th 座位余量
+          tbody
+            each item in data
+              tr
+                td #{item.flight_no}
+                td #{item.dep_city}
+                td #{item.dep_time}
+                td #{item.arr_city}
+                td #{item.arr_time}
+                td #{item.spaces.num} 
+                td #{item.spaces.count} 

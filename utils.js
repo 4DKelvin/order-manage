@@ -2,7 +2,7 @@ const request = require('request');
 const qs = require('querystring').stringify;
 const Order = require('./db').Order;
 const User = require('./db').User;
-const Space = require('./db').Space;
+const parseString = require('xml2js').parseString;
 const uid = 'mrr3kX2ToSgyvbP';
 var api = {
     _getUnBindUser: function() {
@@ -358,45 +358,44 @@ var api = {
             });
         });
     },
-    create_space: function(order_no, dep, arr, date, flight_no, space_name) {
+    spaces: function(dep, arr, date) {
         return new Promise(function(resolve, reject) {
-            Space.update({
-                order_no: order_no
-            }, {
-                flight_no: flight_no,
-                space_name: space_name,
-                space_count: 0,
-                dep: dep,
-                arr: arr,
-                date: date,
-                updated_at: new Date().getTime()
-            }, {
-                strict: false,
-                upsert: true
-            }, function(err, data) {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
-    },
-    spaces: function(keyword) {
-        return new Promise(function(resolve, reject) {
-            Space.find({
-                $or: [{
-                        order_no: {
-                            $regex: keyword
-                        }
-                    },
-                    {
-                        flight_no: {
-                            $regex: keyword
-                        }
-                    }
-                ]
-            }).exec(function(err, orders) {
-                if (err) reject(err);
-                else resolve(orders);
-            })
+            api._state(dep, arr, date).then(function(r) {
+                    parseString(r, function(err, res) {
+                        var data = res.string._,
+                            items = data.split(',E#'),
+                            res_data = [];
+                        items.forEach(function(e) {
+                            var values = e.split(',');
+                            if (values.length >= 7) {
+                                (values[7] || '').replace(/(\S\S)/g, function(e) {
+                                    var val = e.replace(/([a-zA-Z])([0-9])/g, '$1 $2');
+                                    if (val.indexOf(' ') >= 0) {
+                                        var vals = val.split(' ');
+                                        res_data.push({
+                                            date: values[0],
+                                            dep_time: values[1],
+                                            arr_time: values[2],
+                                            flight_no: values[3] + values[4],
+                                            dep_city: values[5],
+                                            arr_city: values[6],
+                                            spaces: {
+                                                num: vals[0],
+                                                count: vals[1]
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                            resolve(res_data.sort(function(a, b) {
+                                return a.spaces.count - b.spaces.count;
+                            }));
+                        });
+                    });
+                },
+                function(e) {
+                    reject(e);
+                });
         });
     },
     orders: function(start, end, page, keyword) {
