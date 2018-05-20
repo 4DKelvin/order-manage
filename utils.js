@@ -58,10 +58,9 @@ var api = {
                     date: date
                 })
             }, function(error, response, body) {
-                console.log(body.data);
                 var res = JSON.parse(body.toString());
                 if (error) reject(error);
-                else resolve(res);
+                else resolve(res.data);
             });
         });
     },
