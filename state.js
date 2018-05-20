@@ -12,8 +12,9 @@ api._state('CTU', 'SZX', '2018-05-28').then(function(r) {
                         (values[7] || '').replace(/(\S\S)/g, function(e) {
                             var val = e.replace(/([a-zA-Z])([0-9])/g, '$1 $2');
                             if (val.indexOf(' ') >= 0) {
-                                var spaces = {};
-                                spaces[val[0]] = val[1];
+                                var spaces = {},
+                                    vals = val.split(' ');
+                                spaces[vals[0]] = vals[1];
                                 res_data.push({
                                     date: values[0],
                                     dep_time: values[1],
