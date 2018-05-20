@@ -6,7 +6,7 @@ api._state('CTU', 'SHA', '2018-05-28').then(function(r) {
             var data = res.string._,
                 items = data.split(',E#')
 
-            console.dir(item.map(function(e) {
+            console.dir(items.map(function(e) {
                 return e.split(',');
             }));
         });
