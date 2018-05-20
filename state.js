@@ -2,7 +2,6 @@ const api = require('./utils');
 const parseString = require('xml2js').parseString;
 // setInterval(function() {
 api._state('CTU', 'SHA', '2018-05-28').then(function(r) {
-        console.log(r);
         parseString(r, function(err, res) {
             console.dir(res);
         });
