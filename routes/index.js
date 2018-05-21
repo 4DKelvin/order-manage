@@ -11,6 +11,10 @@ const format = function(date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
     return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' ' + [n(d.getHours()), n(d.getMinutes()), n(d.getSeconds())].join(':');
 };
+const formatDate = function(date) {
+    var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
+    return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-');
+};
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var d = new Date(),
@@ -45,7 +49,7 @@ router.get('/', function(req, res, next) {
 router.get('/spaces', function(req, res, next) {
     dep = req.query.dep || 'CTU'
     arr = req.query.arr || 'SZX'
-    date = format(req.query.date || '2018-05-28')
+    date = formatDate(req.query.date || '2018-05-28')
     utils.spaces(dep, arr, date).then(function(r) {
         res.render('spaces', {
             title: '仓位管理',
