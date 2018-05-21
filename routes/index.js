@@ -43,14 +43,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/spaces', function(req, res, next) {
-    utils.spaces(req.query.dep, req.query.arr, format(req.query.date)).then(function(r) {
+    dep = req.query.dep || 'CTU'
+    arr = req.query.arr || 'SZX'
+    date = format(req.query.date || '2018-05-28')
+    utils.spaces(dep, arr, date).then(function(r) {
         res.render('spaces', {
             title: '仓位管理',
             data: r,
             params: {
-                dep: req.query.dep || '',
-                arr: req.query.arr || '',
-                date: req.query.date || ''
+                dep: dep
+                arr: arr,
+                date: date
             }
         });
     }, function(e) {
