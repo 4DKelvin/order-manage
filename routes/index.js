@@ -51,7 +51,7 @@ router.get('/spaces', function(req, res, next) {
             title: '仓位管理',
             data: r,
             params: {
-                dep: dep
+                dep: dep,
                 arr: arr,
                 date: date
             }
