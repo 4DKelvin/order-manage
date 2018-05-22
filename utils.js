@@ -34,6 +34,7 @@ var api = {
             }, {
                 upsert: true
             }, function(err, res) {
+                console.log(err, res);
                 if (err) reject(err);
                 else resolve(res);
             })
