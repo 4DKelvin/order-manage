@@ -26,6 +26,7 @@ var api = {
             Setting.findOne({
                 name: name
             }, function(err, res) {
+                console.log(res);
                 if (err) reject(err);
                 else resolve(res.value);
             })
