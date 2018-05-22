@@ -460,6 +460,9 @@ var api = {
                     }
                 }, function(err, space) {
                     if (err) reject(err);
+                    else if (!space) resolve([{
+                        nModified: 0
+                    }]);
                     else {
                         api.spaces_remote(space.dep_city, space.arr_city, space.flight_date)
                             .then(function(data) {
