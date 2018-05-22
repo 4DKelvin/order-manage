@@ -45,7 +45,10 @@ router.get('/', function(req, res, next) {
         });
     });
 });
-
+router.post('/spaces', function(req, res, next) {
+    console.log(req.body);
+    res.redirect('/spaces');
+});
 router.get('/spaces', function(req, res, next) {
     // dep = req.query.dep || 'CTU'
     // arr = req.query.arr || 'SZX'
