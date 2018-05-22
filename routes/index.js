@@ -61,7 +61,7 @@ router.get('/spaces', function(req, res, next) {
         res.render('spaces', {
             title: '仓位管理',
             data: r.map(function(e) {
-                e.updated_at = format(e.updated_at);
+                e.updated_time = format(e.updated_at);
                 return e;
             }),
             params: {
