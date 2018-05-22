@@ -24,13 +24,14 @@ block content
         span.am-input-group-btn
           button.am-btn.am-btn-default(type='submit') 录入
   hr
-  form.am-g(action='/spaces',method='get')
-    .am-u-sm-12.am-u-md-6
-      input.am-form-field(type='text', name='keyword', value=params.keyword, placeholder='关键字')
-    .am-u-sm-12.am-u-md-6
-      .am-input-group.am-input-group
-        span.am-input-group-btn
-          button.am-btn.am-btn-default(type='submit') 搜索
+  .am-g
+    form.am-u-sm-12.am-u-md-4(action='/spaces',method='get')
+      .am-u-sm-12.am-u-md-8
+        input.am-form-field(type='text', name='keyword', value=params.keyword, placeholder='关键字')
+      .am-u-sm-12.am-u-md-4
+        .am-input-group.am-input-group
+          span.am-input-group-btn
+            button.am-btn.am-btn-default(type='submit') 搜索
   hr
   .am-g
     if !data.length
