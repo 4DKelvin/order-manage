@@ -75,7 +75,7 @@ block content
               th 操作
           tbody
             each item in data
-              if item.space_count <= settings.warn
+              if 0 <= item.space_count <= settings.warn
                 tr.am-warning
                   td.am-text-middle #{item.id}
                   td.am-text-middle.am-text-center #{item.flight_no}
