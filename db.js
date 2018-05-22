@@ -5,5 +5,36 @@ mongoose.connect('mongodb://localhost/orders');
 module.exports = {
     Order: mongoose.model('Order', schema),
     User: mongoose.model('User', schema),
-    Space: mongoose.model('Space', schema)
+    Space: mongoose.model('Space', new mongoose.Schema({
+        id: {
+            type: String
+        },
+        updated_at: {
+            type: Number
+        },
+        flight_date: {
+            type: String
+        },
+        flight_no: {
+            type: String
+        },
+        space_name: {
+            type: String
+        },
+        space_count: {
+            type: Number
+        },
+        dep_city: {
+            type: String
+        },
+        dep_time: {
+            type: Number
+        },
+        arr_city: {
+            type: String
+        },
+        arr_time: {
+            type: Number
+        }
+    }))
 };
