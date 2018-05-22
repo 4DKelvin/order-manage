@@ -57,7 +57,7 @@ block content
                   div #{item.dep_time} - #{item.arr_time}
                 th #{format(item.updated_at)}
                 td #{item.space_name} 
-                td #{item.space_count} 
+                td #{item.space_count >= 0 ? item.space_count : '未知'} 
                 td 删除
       .row
         .am-u-sm-12.am-margin-bottom.am-text-right
