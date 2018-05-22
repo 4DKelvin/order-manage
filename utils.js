@@ -31,6 +31,8 @@ var api = {
                 name: name
             }, {
                 value: value
+            }, {
+                upsert: true
             }, function(err, res) {
                 if (err) reject(err);
                 else resolve(res);
