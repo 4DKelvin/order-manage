@@ -348,6 +348,7 @@ var api = {
         var space = params;
         space.updated_at = new Date().getTime() - splitTime;
         space.space_count = -1;
+        console.log(space);
         return new Promise(function(resolve, reject) {
             new Space(space).save(function(err, res) {
                 if (err) reject(err);
