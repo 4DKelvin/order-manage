@@ -345,6 +345,16 @@ var api = {
             });
         });
     },
+    remove_space: function(id) {
+        return new Promise(function(resolve, reject) {
+            Space.remove({
+                id: id
+            }, function(err, res) {
+                if (err) reject(err);
+                else resolve(res);
+            });
+        });
+    },
     create_space: function(params) {
         var space = params;
         space.updated_at = new Date().getTime() - splitTime;

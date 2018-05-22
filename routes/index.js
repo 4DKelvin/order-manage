@@ -56,6 +56,13 @@ router.post('/spaces', function(req, res, next) {
         res.redirect('/spaces');
     })
 });
+router.get('/remove', function(req, res, next) {
+    utils.remove_space(req.query.id).then(function(r) {
+        res.redirect('/spaces');
+    }, function(e) {
+        res.redirect('/spaces');
+    })
+});
 router.get('/spaces', function(req, res, next) {
     // dep = req.query.dep || 'CTU'
     // arr = req.query.arr || 'SZX'
