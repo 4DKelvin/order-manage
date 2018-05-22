@@ -359,7 +359,6 @@ var api = {
         var space = params;
         space.updated_at = new Date().getTime() - splitTime;
         space.space_count = -1;
-        console.log(space);
         return new Promise(function(resolve, reject) {
             new Space(space).save(function(err, res) {
                 if (err) reject(err);
@@ -391,7 +390,9 @@ var api = {
                         }
                     }
                 ]
-            }).order('space_count desc').skip(page * 10).limit(10).exec(function(err, spaces) {
+            }).sort({
+                space_count: -1
+            }).skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
                 else resolve(spaces);
             })
