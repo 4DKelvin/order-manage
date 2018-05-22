@@ -77,20 +77,30 @@ block content
             each item in data
               if item.space_count <= settings.warn
                 tr.am-warning
+                  td.am-text-middle #{item.id}
+                  td.am-text-middle.am-text-center #{item.flight_no}
+                  td.am-text-middle.am-text-center #{item.flight_date}
+                  td.am-text-middle.am-text-center 
+                    .am-text-center #{item.dep_city} - #{item.arr_city}
+                    .am-text-center #{item.dep_time} - #{item.arr_time}
+                  td.am-text-middle.am-text-center #{format(item.updated_at)}
+                  td.am-text-middle.am-text-center #{item.space_name} 
+                  td.am-text-middle.am-text-center #{item.space_count >= 0 ? item.space_count : '未知'} 
+                  td.am-text-middle 
+                    a.am-btn.am-btn-xs.am-btn-danger(href='/remove?id=#{item.id}',style="color:white") 删除
               else
                 tr
-              end
-                td.am-text-middle #{item.id}
-                td.am-text-middle.am-text-center #{item.flight_no}
-                td.am-text-middle.am-text-center #{item.flight_date}
-                td.am-text-middle.am-text-center 
-                  .am-text-center #{item.dep_city} - #{item.arr_city}
-                  .am-text-center #{item.dep_time} - #{item.arr_time}
-                td.am-text-middle.am-text-center #{format(item.updated_at)}
-                td.am-text-middle.am-text-center #{item.space_name} 
-                td.am-text-middle.am-text-center #{item.space_count >= 0 ? item.space_count : '未知'} 
-                td.am-text-middle 
-                  a.am-btn.am-btn-xs.am-btn-danger(href='/remove?id=#{item.id}',style="color:white") 删除
+                  td.am-text-middle #{item.id}
+                  td.am-text-middle.am-text-center #{item.flight_no}
+                  td.am-text-middle.am-text-center #{item.flight_date}
+                  td.am-text-middle.am-text-center 
+                    .am-text-center #{item.dep_city} - #{item.arr_city}
+                    .am-text-center #{item.dep_time} - #{item.arr_time}
+                  td.am-text-middle.am-text-center #{format(item.updated_at)}
+                  td.am-text-middle.am-text-center #{item.space_name} 
+                  td.am-text-middle.am-text-center #{item.space_count >= 0 ? item.space_count : '未知'} 
+                  td.am-text-middle 
+                    a.am-btn.am-btn-xs.am-btn-danger(href='/remove?id=#{item.id}',style="color:white") 删除
       .row
         .am-u-sm-12.am-margin-bottom.am-text-right
           a.am-btn.am-btn-xs.am-btn-success.am-margin-right(href='/?keyword=' + params.keyword + '&page=' + (Number(params.page) - 1 >= 0 ? Number(params.page) - 1 : 0)) 上一页
