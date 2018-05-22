@@ -35,14 +35,16 @@ block content
           .am-input-group.am-input-group
             span.am-input-group-btn
               button.am-btn.am-btn-default(type='submit') 修改
-    form.am-u-sm-12.am-u-md-4(action='/spaces',method='get')
+    form.am-u-sm-12.am-u-md-4(action='/timesupdate',method='post')
       .am-g
-        .am-u-sm-12.am-u-md-8.am-padding-right-sm
-          input.am-form-field(type='text', name='keyword', value=params.keyword, placeholder='关键字')
+        .am-u-sm-12.am-u-md-2.am-text-nowrap
+          label.am-padding-top-xs 同步
+        .am-u-sm-12.am-u-md-6.am-padding-right-sm
+          input.am-form-field(type='text', name='warning', value=params.warning, placeholder='单位分钟')
         .am-u-sm-12.am-u-md-4.am-padding-left-sm
           .am-input-group.am-input-group
             span.am-input-group-btn
-              button.am-btn.am-btn-default(type='submit') 搜索
+              button.am-btn.am-btn-default(type='submit') 修改
     form.am-u-sm-12.am-u-md-4(action='/spaces',method='get')
       .am-g
         .am-u-sm-12.am-u-md-8.am-padding-right-sm
