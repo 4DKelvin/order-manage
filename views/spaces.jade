@@ -1,6 +1,28 @@
 extends layout
 
 block content
+  form.am-g(action='/spaces',method='post')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[id]', placeholder='订单号')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[flight_no]', placeholder='航班')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[date]', placeholder='出发日期')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[dep_city]', placeholder='出发城市')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[dep_time]', placeholder='出发时间')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[arr_city]', placeholder='到达城市')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[arr_time]', placeholder='到达时间')
+    .am-u-sm-12.am-u-md-4
+      input.am-form-field(type='text', name='space[space_name]', placeholder='仓位类型')
+    .am-u-sm-12.am-u-md-4
+      .am-input-group.am-input-group
+        span.am-input-group-btn
+          button.am-btn.am-btn-default(type='submit') 录入
+  hr
   form.am-g(action='/spaces',method='get')
     .am-u-sm-12.am-u-md-6
       input.am-form-field(type='text', name='keyword', value=params.keyword, placeholder='关键字')
