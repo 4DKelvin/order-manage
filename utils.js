@@ -391,7 +391,7 @@ var api = {
                         }
                     }
                 ]
-            }).skip(page * 10).limit(10).exec(function(err, spaces) {
+            }).order('space_count desc').skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
                 else resolve(spaces);
             })
