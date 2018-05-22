@@ -36,13 +36,13 @@ module.exports = {
             type: String
         },
         dep_time: {
-            type: Number
+            type: String
         },
         arr_city: {
             type: String
         },
         arr_time: {
-            type: Number
+            type: String
         }
     }))
 };
