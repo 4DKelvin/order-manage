@@ -345,10 +345,13 @@ var api = {
         });
     },
     create_space: function(params) {
+        var space = params;
+        space.updated_at = new Date().getTime() - splitTime;
+        space.space_count = -1;
         return new Promise(function(resolve, reject) {
             Space.update({
                 id: params.id
-            }, params, {
+            }, space, {
                 strict: false,
                 upsert: true
             }, function(err, data) {

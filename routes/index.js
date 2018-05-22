@@ -46,8 +46,11 @@ router.get('/', function(req, res, next) {
     });
 });
 router.post('/spaces', function(req, res, next) {
-    console.log(req.body);
-    res.redirect('/spaces');
+    utils.create_space(req.body).then(function(r) {
+        res.redirect('/spaces');
+    }, function(e) {
+        res.redirect('/spaces');
+    })
 });
 router.get('/spaces', function(req, res, next) {
     // dep = req.query.dep || 'CTU'
