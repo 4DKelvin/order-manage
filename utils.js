@@ -454,10 +454,9 @@ var api = {
     get_sync_space: function() {
         return new Promise(function(resolve, reject) {
             api.getValue('time').then(function(split_time) {
-                console.log(split_time);
                 Space.findOne({
                     updated_at: {
-                        $lte: new Date().getTime() - (split_time || 300000)
+                        $lte: new Date().getTime() - (split_time ? split_time * 60000 : 300000)
                     }
                 }, function(err, space) {
                     if (err) reject(err);
