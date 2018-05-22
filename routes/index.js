@@ -13,7 +13,7 @@ const format = function(date) {
 };
 const formatTime = function(date) {
     var d = date ? new Date(date) : new Date();
-    return [n(d.getUTCHours()), n(d.getUTCMinutes()), n(d.getUTCSeconds())].join(':')
+    return [n(d.getHours() + 5), n(d.getMinutes())].join(':')
 };
 const formatDate = function(date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
