@@ -6,4 +6,4 @@ setInterval(function() {
         }).join('+'));
         console.log('[' + new Date().toTimeString() + '] Sync finish, space database has been ' + nModified + ' rows updated.');
     })
-}, 5000);
+}, 3000);
