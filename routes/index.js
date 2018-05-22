@@ -13,7 +13,7 @@ const format = function(date) {
 };
 const formatTime = function(date) {
     var d = date ? new Date(date + (5 * 60 * 60 * 1000)) : new Date();
-    return [n(d.getHours() + 5), n(d.getMinutes())].join(':')
+    return [n(d.getHours()), n(d.getMinutes())].join(':')
 };
 const formatDate = function(date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
