@@ -53,8 +53,8 @@ block content
                 td #{item.id}
                 td #{item.flight_no}
                 td 
-                  div #{item.dep_city} - #{item.arr_city}
-                  div #{item.dep_time} - #{item.arr_time}
+                  .am-text-center #{item.dep_time} - #{item.arr_time}
+                  .am-text-center #{item.dep_city} - #{item.arr_city}
                 th #{format(item.updated_at)}
                 td #{item.space_name} 
                 td #{item.space_count >= 0 ? item.space_count : '未知'} 
