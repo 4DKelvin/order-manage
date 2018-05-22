@@ -396,7 +396,7 @@ var api = {
     create_space: function(params) {
         var space = params;
         return new Promise(function(resolve, reject) {
-            space.updated_at = new Date().getTime();
+            space.updated_at = new Date('2000-01-01 00:00:00').getTime();
             space.space_count = -1;
             new Space(space).save(function(err, res) {
                 if (err) reject(err);
