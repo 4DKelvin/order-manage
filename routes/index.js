@@ -11,6 +11,10 @@ const format = function(date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
     return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' ' + [n(d.getHours()), n(d.getMinutes()), n(d.getSeconds())].join(':');
 };
+const formatTime = function(date) {
+    var d = date ? new Date(date) : new Date();
+    return [n(d.getHours()), n(d.getMinutes()), n(d.getSeconds())].join(':')
+};
 const formatDate = function(date) {
     var d = date ? new Date(Date.parse(decodeURIComponent(date))) : new Date();
     return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-');
@@ -61,7 +65,7 @@ router.get('/spaces', function(req, res, next) {
         res.render('spaces', {
             title: '仓位管理',
             data: r.map(function(e) {
-                e.updated_time = format(e.updated_at * 1000);
+                e.updated_time = formatTime(e.updated_at * 1000);
                 return e;
             }),
             params: {
