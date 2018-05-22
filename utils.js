@@ -396,16 +396,12 @@ var api = {
     create_space: function(params) {
         var space = params;
         return new Promise(function(resolve, reject) {
-            api.getValue('split_time').then(function(split_time) {
-                space.updated_at = new Date().getTime() - (split_time || 300000);
-                space.space_count = -1;
-                new Space(space).save(function(err, res) {
-                    if (err) reject(err);
-                    else resolve(res);
-                });
-            }, function(err) {
-                reject(err);
-            })
+            space.updated_at = new Date().getTime();
+            space.space_count = -1;
+            new Space(space).save(function(err, res) {
+                if (err) reject(err);
+                else resolve(res);
+            });
         });
     },
     query_space: function(page, keyword) {
@@ -457,13 +453,39 @@ var api = {
     },
     get_sync_space: function() {
         return new Promise(function(resolve, reject) {
-            Space.findOne({
-                updated_at: {
-                    $gte: new Date().getTime() - splitTime
-                }
-            }, function(err, space) {
-                if (err) reject(err);
-                else resolve(space);
+            api.getValue('split_time').then(function(split_time) {
+                Space.findOne({
+                    updated_at: {
+                        $lte: new Date().getTime() - (split_time || 300000)
+                    }
+                }, function(err, space) {
+                    if (err) reject(err);
+                    else {
+                        api.spaces_remote(space.dep_city, space.arr_city, space.flight_date)
+                            .then(function(data) {
+                                Promise.all(data.map(function(item) {
+                                    return Space.update({
+                                        flight_no: item.flight_no.toUpperCase(),
+                                        flight_date: item.flight_date.toUpperCase(),
+                                        dep_time: item.dep_time.toUpperCase(),
+                                        arr_time: item.arr_time.toUpperCase(),
+                                        dep_city: item.dep_city.toUpperCase(),
+                                        arr_city: item.arr_city.toUpperCase(),
+                                        space_name: item.space_name.toUpperCase(),
+                                    }, {
+                                        updated_at: new Date().getTime(),
+                                        space_count: item.space_count
+                                    })
+                                })).then(function(res) {
+                                    resolve(res);
+                                }, function(ex) {
+                                    reject(ex);
+                                })
+                            });
+                    };
+                });
+            }, function(exception) {
+                reject(exception);
             });
         });
     },
@@ -483,7 +505,7 @@ var api = {
                                         var vals = val.split(' ');
                                         res_data.push({
                                             flight_no: values[3] + values[4],
-                                            date: values[0],
+                                            flight_date: values[0],
                                             dep_time: values[1],
                                             arr_time: values[2],
                                             dep_city: values[5],
@@ -501,7 +523,7 @@ var api = {
                     });
                 },
                 function(e) {
-                    reject(e);
+                    resolve([]);
                 });
         });
     },
