@@ -40,7 +40,6 @@ var api = {
             }, {
                 upsert: true
             }, function(err, res) {
-                console.log(err, res);
                 if (err) reject(err);
                 else resolve(res);
             })
@@ -457,13 +456,16 @@ var api = {
         });
     },
     get_sync_space: function() {
-        // Space.findOne({
-        //     updated_at: {
-        //         $gte: new Date().getTime() - splitTime
-        //     }
-        // }, function(err, res) {
-        //     res
-        // })
+        return new Promise(function(resolve, reject) {
+            Space.findOne({
+                updated_at: {
+                    $gte: new Date().getTime() - splitTime
+                }
+            }, function(err, space) {
+                if (err) reject(err);
+                else resolve(space);
+            });
+        });
     },
     spaces_remote: function(dep, arr, date) {
         return new Promise(function(resolve, reject) {

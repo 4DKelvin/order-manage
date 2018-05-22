@@ -67,6 +67,7 @@ block content
             tr
               th 订单号码
               th.am-text-center 航班号码
+              th.am-text-center 航班日期
               th.am-text-center 航班信息
               th.am-text-center 更新时间
               th.am-text-center 仓位类型
@@ -77,6 +78,7 @@ block content
               tr
                 td.am-text-middle #{item.id}
                 td.am-text-middle.am-text-center #{item.flight_no}
+                td.am-text-middle.am-text-center #{item.flight_date}
                 td.am-text-middle.am-text-center 
                   .am-text-center #{item.dep_city} - #{item.arr_city}
                   .am-text-center #{item.dep_time} - #{item.arr_time}
