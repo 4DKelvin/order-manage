@@ -61,7 +61,14 @@ router.get('/spaces', function(req, res, next) {
             }
         });
     }, function(e) {
-        res.json(e);
+        res.render('spaces', {
+            title: '仓位管理',
+            data: [],
+            params: {
+                keyword: keyword || '',
+                page: req.query.page || 0
+            }
+        });
     })
 });
 
