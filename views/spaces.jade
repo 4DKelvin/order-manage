@@ -50,14 +50,14 @@ block content
           tbody
             each item in data
               tr
-                td #{item.id}
-                td.am-text-center #{item.flight_no}
-                td.am-text-center 
+                td.am-text-middle #{item.id}
+                td.am-text-middle.am-text-center #{item.flight_no}
+                td.am-text-middle.am-text-center 
                   .am-text-center #{item.dep_city} - #{item.arr_city}
                   .am-text-center #{item.dep_time} - #{item.arr_time}
-                th.am-text-center #{format(item.updated_at)}
-                td.am-text-center #{item.space_name} 
-                td.am-text-center #{item.space_count >= 0 ? item.space_count : '未知'} 
+                td.am-text-middle.am-text-center #{format(item.updated_at)}
+                td.am-text-middle.am-text-center #{item.space_name} 
+                td.am-text-middle.am-text-center #{item.space_count >= 0 ? item.space_count : '未知'} 
                 td 删除
       .row
         .am-u-sm-12.am-margin-bottom.am-text-right
