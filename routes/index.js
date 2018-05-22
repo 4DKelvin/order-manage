@@ -47,17 +47,16 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/spaces', function(req, res, next) {
-    dep = req.query.dep || 'CTU'
-    arr = req.query.arr || 'SZX'
-    date = formatDate(req.query.date || '2018-05-28')
-    utils.spaces(dep, arr, date).then(function(r) {
+    // dep = req.query.dep || 'CTU'
+    // arr = req.query.arr || 'SZX'
+    // date = formatDate(req.query.date || '2018-05-28')
+    utils.query_space(req.query.page || 0, keyword).then(function(r) {
         res.render('spaces', {
             title: '仓位管理',
             data: r,
             params: {
-                dep: dep,
-                arr: arr,
-                date: date
+                keyword: keyword || '',
+                page: req.query.page || 0
             }
         });
     }, function(e) {

@@ -22,20 +22,31 @@ block content
         table.am-table.am-table-bd.am-table-striped.admin-content-table.am-text-nowrap
           thead
             tr
+              th 订单号码
               th 航班号码
               th 起飞城市
               th 起飞时间
               th 到达城市
               th 到达时间
+              th 更新时间
               th 仓位类型
               th 座位余量
+              th 操作
           tbody
             each item in data
               tr
+                td #{item.id}
                 td #{item.flight_no}
                 td #{item.dep_city}
                 td #{item.dep_time}
                 td #{item.arr_city}
                 td #{item.arr_time}
-                td #{item.spaces.num} 
-                td #{item.spaces.count} 
+                th #{item.updated_at}
+                td #{item.space_name} 
+                td #{item.space_count} 
+                td 删除
+      .row
+        .am-u-sm-12.am-margin-bottom.am-text-right
+          a.am-btn.am-btn-xs.am-btn-success.am-margin-right(href='/?keyword=' + params.keyword + '&page=' + (Number(params.page) - 1 >= 0 ? Number(params.page) - 1 : 0)) 上一页
+          span.am-btn.am-btn-xs.am-btn-default.am-margin-right 第 #{Number(params.page) + 1} 页
+          a.am-btn.am-btn-xs.am-btn-success(href='/?keyword=' + params.keyword + '&page=' + (Number(params.page) + 1)) 下一页

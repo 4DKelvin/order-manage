@@ -4,6 +4,7 @@ const Order = require('./db').Order;
 const User = require('./db').User;
 const parseString = require('xml2js').parseString;
 const uid = 'mrr3kX2ToSgyvbP';
+const splitTime = 10 * 60 * 1000;
 var api = {
     _getUnBindUser: function() {
         return new Promise(function(resolve, reject) {
@@ -343,10 +344,53 @@ var api = {
             });
         });
     },
-    update_space: function(order_no, count) {
+    create_space: function(params) {
         return new Promise(function(resolve, reject) {
             Space.update({
-                order_no: order_no
+                id: params.id
+            }, params, {
+                strict: false,
+                upsert: true
+            }, function(err, data) {
+                if (err) reject(err);
+                else resolve(data);
+            });
+        });
+    },
+    query_space: function(page, keyword) {
+        return new Promise(function(resolve, reject) {
+            Space.find({
+                $or: [{
+                        id: {
+                            $regex: keyword
+                        }
+                    },
+                    {
+                        arr: {
+                            $regex: keyword
+                        }
+                    },
+                    {
+                        dep: {
+                            $regex: keyword
+                        }
+                    },
+                    {
+                        flight_no: {
+                            $regex: keyword
+                        }
+                    }
+                ]
+            }).skip(page * 10).limit(10).exec(function(err, spaces) {
+                if (err) reject(err);
+                else resolve(spaces);
+            })
+        });
+    },
+    update_count: function(id, count) {
+        return new Promise(function(resolve, reject) {
+            Space.update({
+                id: id
             }, {
                 space_count: count
             }, {
@@ -358,7 +402,16 @@ var api = {
             });
         });
     },
-    spaces: function(dep, arr, date) {
+    get_sync_space: function() {
+        Space.findOne({
+            updated_at: {
+                $gte: new Date().getTime() - splitTime
+            }
+        }, function(err, res) {
+            res
+        })
+    },
+    spaces_remote: function(dep, arr, date) {
         return new Promise(function(resolve, reject) {
             api._state(dep, arr, date).then(function(r) {
                     parseString(r, function(err, res) {
@@ -373,16 +426,14 @@ var api = {
                                     if (val.indexOf(' ') >= 0) {
                                         var vals = val.split(' ');
                                         res_data.push({
+                                            flight_no: values[3] + values[4],
                                             date: values[0],
                                             dep_time: values[1],
                                             arr_time: values[2],
-                                            flight_no: values[3] + values[4],
                                             dep_city: values[5],
                                             arr_city: values[6],
-                                            spaces: {
-                                                num: vals[0],
-                                                count: vals[1]
-                                            }
+                                            space_name: vals[0],
+                                            space_count: vals[1]
                                         });
                                     }
                                 });
