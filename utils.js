@@ -429,7 +429,7 @@ var api = {
                     }
                 ]
             }).sort({
-                space_count: -1
+                space_count: 1
             }).skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
                 else resolve(spaces);

@@ -6,4 +6,4 @@ setInterval(function() {
         }).join('+'));
         console.log('[' + new Date().toDateString() + ']' + nModified + 'rows updated.');
     })
-}, 1000);
+}, 1500);
