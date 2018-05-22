@@ -349,14 +349,9 @@ var api = {
         space.updated_at = new Date().getTime() - splitTime;
         space.space_count = -1;
         return new Promise(function(resolve, reject) {
-            Space.update({
-                id: params.id
-            }, space, {
-                strict: false,
-                upsert: true
-            }, function(err, data) {
+            new Space(space).save(function(err, res) {
                 if (err) reject(err);
-                else resolve(data);
+                else resolve(res);
             });
         });
     },
