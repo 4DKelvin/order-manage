@@ -64,10 +64,8 @@ router.get('/spaces', function(req, res, next) {
     utils.query_space(req.query.page || 0, keyword).then(function(r) {
         res.render('spaces', {
             title: '仓位管理',
-            data: r.map(function(e) {
-                e.updated_time = formatTime(e.updated_at * 1000);
-                return e;
-            }),
+            data: r,
+            format: formatTime,
             params: {
                 keyword: keyword || '',
                 page: req.query.page || 0
