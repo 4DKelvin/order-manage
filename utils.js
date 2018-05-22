@@ -516,8 +516,8 @@ var api = {
                                     }
                                 });
                             }
-                            resolve(res_data);
                         });
+                        resolve(res_data);
                     });
                 },
                 function(e) {
