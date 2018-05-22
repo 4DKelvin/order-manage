@@ -12,7 +12,7 @@ const format = function(date) {
     return [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' ' + [n(d.getHours()), n(d.getMinutes()), n(d.getSeconds())].join(':');
 };
 const formatTime = function(date) {
-    var d = date ? new Date(date + (5 * 60 * 60 * 1000)) : new Date();
+    var d = date ? new Date(date + (8 * 60 * 60 * 1000)) : new Date();
     return [n(d.getHours()), n(d.getMinutes())].join(':')
 };
 const formatDate = function(date) {
