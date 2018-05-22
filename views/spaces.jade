@@ -42,10 +42,7 @@ block content
             tr
               th 订单号码
               th 航班号码
-              th 起飞城市
-              th 起飞时间
-              th 到达城市
-              th 到达时间
+              th 航班信息
               th 更新时间
               th 仓位类型
               th 座位余量
@@ -55,10 +52,9 @@ block content
               tr
                 td #{item.id}
                 td #{item.flight_no}
-                td #{item.dep_city}
-                td #{item.dep_time}
-                td #{item.arr_city}
-                td #{item.arr_time}
+                td 
+                  div #{item.dep_city} - #{item.arr_city}
+                  div #{item.dep_time} - #{item.arr_time}
                 th #{item.updated_at}
                 td #{item.space_name} 
                 td #{item.space_count} 
