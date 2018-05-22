@@ -516,9 +516,7 @@ var api = {
                                     }
                                 });
                             }
-                            resolve(res_data.sort(function(a, b) {
-                                return a.spaces.count - b.spaces.count;
-                            }));
+                            resolve(res_data);
                         });
                     });
                 },
