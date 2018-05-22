@@ -56,6 +56,13 @@ router.post('/spaces', function(req, res, next) {
         res.redirect('/spaces');
     })
 });
+router.post('/settings', function(req, res, next) {
+    utils.setValue(req.body.name, req.body.value).then(function(r) {
+        res.redirect('/spaces');
+    }, function(e) {
+        res.redirect('/spaces');
+    })
+});
 router.get('/remove', function(req, res, next) {
     utils.remove_space(req.query.id).then(function(r) {
         res.redirect('/spaces');
@@ -68,25 +75,31 @@ router.get('/spaces', function(req, res, next) {
     // arr = req.query.arr || 'SZX'
     // date = formatDate(req.query.date || '2018-05-28')
     var keyword = decodeURIComponent(req.query.keyword || '');
-    utils.query_space(req.query.page || 0, keyword).then(function(r) {
-        res.render('spaces', {
-            title: '仓位管理',
-            data: r,
-            format: formatTime,
-            params: {
-                keyword: keyword || '',
-                page: req.query.page || 0
-            }
-        });
+    utils.getSettings().then(function(settings) {
+        utils.query_space(req.query.page || 0, keyword).then(function(r) {
+            res.render('spaces', {
+                title: '仓位管理',
+                data: r,
+                settings: settings,
+                format: formatTime,
+                params: {
+                    keyword: keyword || '',
+                    page: req.query.page || 0
+                }
+            });
+        }, function(e) {
+            res.render('spaces', {
+                title: '仓位管理',
+                data: [],
+                settings: settings,
+                params: {
+                    keyword: keyword || '',
+                    page: req.query.page || 0
+                }
+            });
+        })
     }, function(e) {
-        res.render('spaces', {
-            title: '仓位管理',
-            data: [],
-            params: {
-                keyword: keyword || '',
-                page: req.query.page || 0
-            }
-        });
+        res.send(500);
     })
 });
 

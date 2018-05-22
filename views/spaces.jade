@@ -25,22 +25,24 @@ block content
           button.am-btn.am-btn-default(type='submit') 录入
   hr
   .am-g
-    form.am-u-sm-12.am-u-md-4(action='/warning',method='post')
+    form.am-u-sm-12.am-u-md-4(action='/settings',method='post')
       .am-g
         .am-u-sm-12.am-u-md-2.am-text-nowrap
           label.am-padding-top-xs 警报
         .am-u-sm-12.am-u-md-6.am-padding-right-sm
-          input.am-form-field(type='text', name='warning', value=params.warning, placeholder='余量值')
+          input(type='hidden',name="name",value="warn")
+          input.am-form-field(type='text', name='value', value=settings.warn, placeholder='余量值')
         .am-u-sm-12.am-u-md-4.am-padding-left-sm
           .am-input-group.am-input-group
             span.am-input-group-btn
               button.am-btn.am-btn-warning(type='submit') 修改
-    form.am-u-sm-12.am-u-md-4(action='/timesupdate',method='post')
+    form.am-u-sm-12.am-u-md-4(action='/settings',method='post')
       .am-g
         .am-u-sm-12.am-u-md-2.am-text-nowrap
           label.am-padding-top-xs 同步
         .am-u-sm-12.am-u-md-6.am-padding-right-sm
-          input.am-form-field(type='text', name='warning', value=params.warning, placeholder='单位分钟')
+          input(type='hidden',name="name",value="time")
+          input.am-form-field(type='text', name='value', value=settings.time, placeholder='单位分钟')
         .am-u-sm-12.am-u-md-4.am-padding-left-sm
           .am-input-group.am-input-group
             span.am-input-group-btn

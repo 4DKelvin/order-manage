@@ -3,10 +3,40 @@ const qs = require('querystring').stringify;
 const Order = require('./db').Order;
 const User = require('./db').User;
 const Space = require('./db').Space;
+const Setting = require('./db').Setting;
 const parseString = require('xml2js').parseString;
 const uid = 'mrr3kX2ToSgyvbP';
-const splitTime = 10 * 60 * 1000;
 var api = {
+    getSettings: function() {
+        return new Promise(function(resolve, reject) {
+            Setting.find({}, function(err, settings) {
+                if (err) reject(err);
+                else resolve(settings);
+            })
+        });
+    },
+    getValue: function(name) {
+        return new Promise(function(resolve, reject) {
+            Setting.findOne({
+                name: name
+            }, function(err, res) {
+                if (err) reject(err);
+                else resolve(res.value);
+            })
+        });
+    },
+    setValue: function(name, value) {
+        return new Promise(function(resolve, reject) {
+            Setting.update({
+                name: name
+            }, {
+                value: value
+            }, function(err, res) {
+                if (err) reject(err);
+                else resolve(res);
+            })
+        });
+    },
     _getUnBindUser: function() {
         return new Promise(function(resolve, reject) {
             User.findOne({
@@ -357,13 +387,17 @@ var api = {
     },
     create_space: function(params) {
         var space = params;
-        space.updated_at = new Date().getTime() - splitTime;
-        space.space_count = -1;
         return new Promise(function(resolve, reject) {
-            new Space(space).save(function(err, res) {
-                if (err) reject(err);
-                else resolve(res);
-            });
+            api.getValue('split_time').then(function(split_time) {
+                space.updated_at = new Date().getTime() - (split_time || 300000);
+                space.space_count = -1;
+                new Space(space).save(function(err, res) {
+                    if (err) reject(err);
+                    else resolve(res);
+                });
+            }, function(err) {
+                reject(err);
+            })
         });
     },
     query_space: function(page, keyword) {
@@ -414,13 +448,13 @@ var api = {
         });
     },
     get_sync_space: function() {
-        Space.findOne({
-            updated_at: {
-                $gte: new Date().getTime() - splitTime
-            }
-        }, function(err, res) {
-            res
-        })
+        // Space.findOne({
+        //     updated_at: {
+        //         $gte: new Date().getTime() - splitTime
+        //     }
+        // }, function(err, res) {
+        //     res
+        // })
     },
     spaces_remote: function(dep, arr, date) {
         return new Promise(function(resolve, reject) {

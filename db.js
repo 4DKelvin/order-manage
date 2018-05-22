@@ -5,6 +5,14 @@ mongoose.connect('mongodb://localhost/orders');
 module.exports = {
     Order: mongoose.model('Order', schema),
     User: mongoose.model('User', schema),
+    Setting: mongoose.model('Setting', new mongoose.Schema({
+        name: {
+            type: String
+        },
+        value: {
+            type: String
+        }
+    })),
     Space: mongoose.model('Space', new mongoose.Schema({
         id: {
             type: String
