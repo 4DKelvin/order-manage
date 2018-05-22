@@ -4,6 +4,6 @@ setInterval(function() {
         var nModified = eval(r.map(function(e) {
             return e.nModified;
         }).join('+'));
-        //console.log('[' + new Date().toDateString() + '] Sync finish, space database has been ' + nModified + ' rows updated.');
+        console.log('[' + new Date().toDateString() + '] Sync finish, space database has been ' + nModified + ' rows updated.');
     })
 }, 15000);
