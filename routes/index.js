@@ -50,7 +50,7 @@ router.get('/spaces', function(req, res, next) {
     // dep = req.query.dep || 'CTU'
     // arr = req.query.arr || 'SZX'
     // date = formatDate(req.query.date || '2018-05-28')
-    var keyword = decodeURIComponent(req.query.keyword);
+    var keyword = decodeURIComponent(req.query.keyword || '');
     utils.query_space(req.query.page || 0, keyword).then(function(r) {
         res.render('spaces', {
             title: '仓位管理',
