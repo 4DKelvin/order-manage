@@ -479,8 +479,15 @@ var api = {
                                         updated_at: new Date().getTime(),
                                         space_count: item.space_count
                                     })
-                                })).then(function(res) {
-                                    resolve(res);
+                                })).then(function(result) {
+                                    Space.update({
+                                        id: space.id
+                                    }, {
+                                        updated_at: new Date().getTime()
+                                    }, function(err, res) {
+                                        if (err) reject(err);
+                                        else resolve(result);
+                                    })
                                 }, function(ex) {
                                     reject(ex);
                                 })
