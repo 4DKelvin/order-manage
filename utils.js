@@ -454,6 +454,7 @@ var api = {
     get_sync_space: function() {
         return new Promise(function(resolve, reject) {
             api.getValue('time').then(function(split_time) {
+                console.log(split_time);
                 Space.findOne({
                     updated_at: {
                         $lte: new Date().getTime() - (split_time || 300000)
@@ -464,15 +465,6 @@ var api = {
                         api.spaces_remote(space.dep_city, space.arr_city, space.flight_date)
                             .then(function(data) {
                                 Promise.all(data.map(function(item) {
-                                    console.log({
-                                        flight_no: item.flight_no.toUpperCase(),
-                                        flight_date: item.flight_date.toUpperCase(),
-                                        dep_time: item.dep_time.toUpperCase(),
-                                        arr_time: item.arr_time.toUpperCase(),
-                                        dep_city: item.dep_city.toUpperCase(),
-                                        arr_city: item.arr_city.toUpperCase(),
-                                        space_name: item.space_name.toUpperCase(),
-                                    })
                                     return Space.update({
                                         flight_no: item.flight_no.toUpperCase(),
                                         flight_date: item.flight_date.toUpperCase(),
