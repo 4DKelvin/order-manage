@@ -2,6 +2,7 @@ const request = require('request');
 const qs = require('querystring').stringify;
 const Order = require('./db').Order;
 const User = require('./db').User;
+const Space = require('./db').Space;
 const parseString = require('xml2js').parseString;
 const uid = 'mrr3kX2ToSgyvbP';
 const splitTime = 10 * 60 * 1000;
