@@ -11,7 +11,13 @@ var api = {
         return new Promise(function(resolve, reject) {
             Setting.find({}, function(err, settings) {
                 if (err) reject(err);
-                else resolve(settings);
+                else {
+                    var res = {};
+                    settings.forEach(function(e) {
+                        res[e.name] = e.value;
+                    });
+                    resolve(res);
+                }
             })
         });
     },
