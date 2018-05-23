@@ -466,6 +466,7 @@ var api = {
                     else {
                         api.spaces_remote(space.dep_city, space.arr_city, space.flight_date)
                             .then(function(data) {
+                                console.log(data);
                                 Promise.all(data.map(function(item) {
                                     return Space.update({
                                         flight_no: item.flight_no.toUpperCase(),
@@ -503,7 +504,6 @@ var api = {
         return new Promise(function(resolve, reject) {
             api._state(dep, arr, date).then(function(r) {
                     parseString(r, function(err, res) {
-                        console.log(res);
                         var data = res.string._,
                             items = data.split(',E#'),
                             res_data = [];
