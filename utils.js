@@ -488,7 +488,8 @@ var api = {
                                         space_name: item.space_name.toUpperCase(),
                                     }, {
                                         updated_at: new Date().getTime(),
-                                        space_count: item.space_count
+                                        space_count: item.space_count,
+                                        warn: isNaN(item.space_count) && item.space_count != 'A'
                                     })
                                 })).then(function(result) {
                                     Space.update({
