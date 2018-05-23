@@ -398,6 +398,7 @@ var api = {
         return new Promise(function(resolve, reject) {
             space.updated_at = new Date('2000-01-01 00:00:00').getTime();
             space.space_count = -1;
+            space.warn = false;
             new Space(space).save(function(err, res) {
                 if (err) reject(err);
                 else resolve(res);
@@ -429,6 +430,7 @@ var api = {
                     }
                 ]
             }).sort({
+                warn: 1,
                 space_count: 1
             }).skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
@@ -445,7 +447,8 @@ var api = {
             Space.update({
                 id: id
             }, {
-                space_count: count
+                space_count: count,
+                warn: isNaN(count) && count != 'A'
             }, {
                 strict: false,
                 upsert: true

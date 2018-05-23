@@ -17,6 +17,9 @@ module.exports = {
         id: {
             type: String
         },
+        warn: {
+            type: Boolean
+        },
         updated_at: {
             type: Number
         },
