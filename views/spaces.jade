@@ -75,7 +75,7 @@ block content
               th 操作
           tbody
             each item in data
-              if (isNaN(item.space_count) && item.space_count!='A') || (Number(item.space_count) > 0 && Number(item.space_count <= settings.warn)
+              if (isNaN(item.space_count) && item.space_count!='A') || (Number(item.space_count) > 0 && Number(item.space_count <= settings.warn))
                 tr.am-warning
                   td.am-text-middle #{item.id}
                   td.am-text-middle.am-text-center #{item.flight_no}
