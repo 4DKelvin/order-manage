@@ -85,7 +85,7 @@ block content
                     .am-text-center #{item.dep_time} - #{item.arr_time}
                   td.am-text-middle.am-text-center #{format(item.updated_at)}
                   td.am-text-middle.am-text-center #{item.space_name} 
-                  td.am-text-middle.am-text-center #{item.space_count} 
+                  td.am-text-middle.am-text-center #{item.space_count=="-1"?'未知':item.space_count} 
                   td.am-text-middle 
                     a.am-btn.am-btn-xs.am-btn-danger(href='/remove?id=#{item.id}',style="color:white") 删除
               else
