@@ -428,14 +428,15 @@ var api = {
                         }
                     }
                 ]
-            }).sort(function(a, b) {
-                console.log(a, b);
-                if (isNaN(b.space_count) && b.space_count != "A") return 1;
-                if (isNaN(a.space_count) && a.space_count != "A") return -1;
-                return a.space_count.localeCompare(b.space_count);
+            }).sort({
+                space_count: 1
             }).skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
-                else resolve(spaces);
+                else resolve(spaces.sort(function(a, b) {
+                    if (isNaN(b.space_count) && b.space_count != "A") return 1;
+                    if (isNaN(a.space_count) && a.space_count != "A") return -1;
+                    return a.space_count.localeCompare(b.space_count);
+                }));
             })
         });
     },
