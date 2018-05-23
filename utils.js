@@ -441,7 +441,7 @@ var api = {
                 }));
             })
         });
-    }
+    },
     get_sync_space: function() {
         return new Promise(function(resolve, reject) {
             api.getValue('time').then(function(split_time) {
