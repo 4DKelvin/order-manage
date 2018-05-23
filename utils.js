@@ -428,8 +428,10 @@ var api = {
                         }
                     }
                 ]
-            }).sort({
-                space_count: 1
+            }).sort(function(a, b) {
+                if (isNaN(b.space_count) && b.space_count != "A") return 1;
+                if (isNaN(a.space_count) && a.space_count != "A") return -1;
+                return a.space_count.localeCompare(b.space_count);
             }).skip(page * 10).limit(10).exec(function(err, spaces) {
                 if (err) reject(err);
                 else resolve(spaces);
