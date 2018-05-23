@@ -30,7 +30,7 @@ module.exports = {
             type: String
         },
         space_count: {
-            type: Number
+            type: String
         },
         dep_city: {
             type: String
