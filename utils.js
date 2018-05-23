@@ -504,6 +504,7 @@ var api = {
         return new Promise(function(resolve, reject) {
             api._state(dep, arr, date).then(function(r) {
                     parseString(r, function(err, res) {
+                        console.log(res);
                         var data = res.string._,
                             items = data.split(',E#'),
                             res_data = [];
