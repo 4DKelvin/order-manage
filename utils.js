@@ -429,6 +429,7 @@ var api = {
                     }
                 ]
             }).sort(function(a, b) {
+                console.log(a, b);
                 if (isNaN(b.space_count) && b.space_count != "A") return 1;
                 if (isNaN(a.space_count) && a.space_count != "A") return -1;
                 return a.space_count.localeCompare(b.space_count);
