@@ -466,7 +466,6 @@ var api = {
                     else {
                         api.spaces_remote(space.dep_city, space.arr_city, space.flight_date)
                             .then(function(data) {
-                                console.log(data);
                                 Promise.all(data.map(function(item) {
                                     return Space.update({
                                         flight_no: item.flight_no.toUpperCase(),
