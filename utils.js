@@ -441,27 +441,7 @@ var api = {
                 }));
             })
         });
-    },
-    update_count: function(id, count) {
-        console.log(id, count);
-        return new Promise(function(resolve, reject) {
-            Space.update({
-                id: id
-            }, {
-                $set: {
-                    space_count: count,
-                    warn: isNaN(count) && count != 'A'
-                }
-            }, {
-                strict: false,
-                upsert: true
-            }, function(err, data) {
-                console.log(data);
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
-    },
+    }
     get_sync_space: function() {
         return new Promise(function(resolve, reject) {
             api.getValue('time').then(function(split_time) {
