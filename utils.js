@@ -532,6 +532,7 @@ var api = {
                     });
                 },
                 function(e) {
+                    console.log(e);
                     resolve([]);
                 });
         });
