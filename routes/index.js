@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
     var d = new Date(),
         start = [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 00:00:00',
         end = [d.getFullYear(), n(d.getMonth() + 1), n(d.getDate())].join('-') + ' 23:59:59',
-        keyword = decodeURIComponent(req.query.keyword);
+        keyword = decodeURIComponent(req.query.keyword || '');
     utils.orders(format(req.query.start || start), format(req.query.end || end), req.query.page || 0, keyword).then(function(r) {
         res.render('index', {
             title: '订单管理',
