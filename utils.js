@@ -443,6 +443,7 @@ var api = {
         });
     },
     update_count: function(id, count) {
+        console.log(id, count);
         return new Promise(function(resolve, reject) {
             Space.update({
                 id: id
@@ -455,6 +456,7 @@ var api = {
                 strict: false,
                 upsert: true
             }, function(err, data) {
+                console.log(data);
                 if (err) reject(err);
                 else resolve(data);
             });
