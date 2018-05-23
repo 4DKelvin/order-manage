@@ -447,8 +447,10 @@ var api = {
             Space.update({
                 id: id
             }, {
-                space_count: count,
-                warn: isNaN(count) && count != 'A'
+                $set: {
+                    space_count: count,
+                    warn: isNaN(count) && count != 'A'
+                }
             }, {
                 strict: false,
                 upsert: true
