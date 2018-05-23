@@ -510,10 +510,10 @@ var api = {
                         items.forEach(function(e) {
                             var values = e.split(',');
                             if (values.length >= 7) {
-                                (values[7] || '').replace(/(\S\S)/g, function(e) {
-                                    var val = e.replace(/([a-zA-Z])([0-9])/g, '$1 $2');
-                                    if (val.indexOf(' ') >= 0) {
-                                        var vals = val.split(' ');
+                                var val = values[7].replace(/(\S)(\S)/g, '"$1":"$2",'),
+                                    vars = JSON.parse('{' + val.substr(0, val.length - 1) + '}');
+                                for (const key in vars) {
+                                    if (vars.hasOwnProperty(key)) {
                                         res_data.push({
                                             flight_no: values[3] + values[4],
                                             flight_date: values[0],
@@ -521,11 +521,11 @@ var api = {
                                             arr_time: values[2],
                                             dep_city: values[5],
                                             arr_city: values[6],
-                                            space_name: vals[0],
-                                            space_count: vals[1]
+                                            space_name: key,
+                                            space_count: vars[key]
                                         });
                                     }
-                                });
+                                }
                             }
                         });
                         resolve(res_data);
