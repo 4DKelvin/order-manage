@@ -512,6 +512,7 @@ var api = {
     },
     spaces_remote: function(dep, arr, date) {
         return new Promise(function(resolve, reject) {
+            console.log(der, arr, date);
             api._state(dep, arr, date).then(function(r) {
                     parseString(r, function(err, res) {
                         console.log(res);
