@@ -490,7 +490,17 @@ var api = {
                                     })
                                 }, function(ex) {
                                     reject(ex);
+
                                 })
+                            }, function(e) {
+                                Space.update({
+                                    id: space.id
+                                }, {
+                                    updated_at: new Date().getTime()
+                                }, function(err, res) {
+                                    if (err) reject(err);
+                                    else reject(e);
+                                });
                             });
                     };
                 });
@@ -531,7 +541,7 @@ var api = {
                     });
                 },
                 function(e) {
-                    resolve([]);
+                    reject(e);
                 });
         });
     },
