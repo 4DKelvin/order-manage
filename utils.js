@@ -408,6 +408,7 @@ var api = {
                 dep_time: space.dep_time,
                 space_name: space.space_name
             }, function(err, item) {
+                console.log(err, item);
                 if (err) reject(err);
                 else if (item) reject('订单已存在');
                 else {
