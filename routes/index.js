@@ -60,7 +60,7 @@ router.post('/settings', function(req, res, next) {
     utils.setValue(req.body.name, req.body.value).then(function(r) {
         res.redirect('/spaces');
     }, function(e) {
-        res.redirect('/spaces');
+        res.write('<script type="text/javascript">alert("' + e + '");history.back();</sciprt>');
     })
 });
 router.get('/remove', function(req, res, next) {

@@ -399,7 +399,7 @@ var api = {
             space.updated_at = new Date('2000-01-01 00:00:00').getTime();
             space.space_count = -1;
             space.warn = false;
-            Space.update({
+            Space.findOne({
                 flight_no: space.flight_no,
                 flight_date: space.flight_date,
                 arr_city: space.arr_city,
@@ -407,10 +407,17 @@ var api = {
                 dep_city: space.dep_city,
                 dep_time: space.dep_time,
                 space_name: space.space_name
-            }, space, { upsert: true }, function(err, res) {
+            }, function(err, item) {
                 if (err) reject(err);
-                else resolve(res);
+                else if (item) reject('订单已存在');
+                else {
+                    new Space(space).then(function(err, res) {
+                        if (err) reject(err);
+                        else resolve(res);
+                    });
+                }
             });
+
         });
     },
     query_space: function(page, keyword) {
