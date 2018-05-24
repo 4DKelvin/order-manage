@@ -53,7 +53,7 @@ router.post('/spaces', function(req, res, next) {
     utils.create_space(req.body).then(function(r) {
         res.redirect('/spaces');
     }, function(e) {
-        res.redirect('/spaces');
+        res.write('<script type="text/javascript">alert("' + e + '");history.back();</sciprt>');
     })
 });
 router.post('/settings', function(req, res, next) {
@@ -67,7 +67,7 @@ router.get('/remove', function(req, res, next) {
     utils.remove_space(req.query.id).then(function(r) {
         res.redirect('/spaces');
     }, function(e) {
-        res.redirect('/spaces');
+        res.write('<script type="text/javascript">alert("' + e + '");history.back();</sciprt>');
     })
 });
 router.get('/spaces', function(req, res, next) {
@@ -99,7 +99,7 @@ router.get('/spaces', function(req, res, next) {
             });
         })
     }, function(e) {
-        res.send(500);
+        res.write('<script type="text/javascript">alert("' + e + '");history.back();</sciprt>');
     })
 });
 
