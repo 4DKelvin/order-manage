@@ -399,7 +399,15 @@ var api = {
             space.updated_at = new Date('2000-01-01 00:00:00').getTime();
             space.space_count = -1;
             space.warn = false;
-            new Space(space).save(function(err, res) {
+            Space.update({
+                flight_no: space.flight_no,
+                flight_date: space.flight_date,
+                arr_city: space.arr_city,
+                arr_time: space.arr_time,
+                dep_city: space.dep_city,
+                dep_time: space.dep_time,
+                space_name: space.space_name
+            }, space, { upsert: true }, function(err, res) {
                 if (err) reject(err);
                 else resolve(res);
             });
