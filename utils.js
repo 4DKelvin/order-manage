@@ -411,7 +411,7 @@ var api = {
                 if (err) reject(err);
                 else if (item) reject('订单已存在');
                 else {
-                    new Space(space).then(function(err, res) {
+                    new Space(space).save(function(err, res) {
                         if (err) reject(err);
                         else resolve(res);
                     });
